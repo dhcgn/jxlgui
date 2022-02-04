@@ -54,7 +54,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="PREVIEW! Expect nothing!" Foreground="DarkRed"/>
+        <TextBlock Text="PREVIEW! Expect nothing!" Foreground="#CCC732"/>
 
         <Border Grid.Row="0" Drop="Border_Drop" AllowDrop="True" DragOver="Border_DragOver" BorderBrush="Gray"
                 Background="#6F6F6F"
