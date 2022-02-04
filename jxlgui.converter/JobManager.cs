@@ -51,7 +51,7 @@ public class JobManager
         switch (job.Operation)
         {
             case Job.OperationEnum.Encode:
-                targetFilePath = $"{Path.Combine(new FileInfo(job.FilePath).DirectoryName, job.FileName)}.avif";
+                targetFilePath = $"{Path.Combine(new FileInfo(job.FilePath).DirectoryName, job.FileName)}.jxl";
                 break;
             case Job.OperationEnum.Decode:
                 targetFilePath = $"{Path.Combine(new FileInfo(job.FilePath).DirectoryName, job.FileName)}.png";
@@ -65,9 +65,9 @@ public class JobManager
         switch (job.Operation)
         {
             case Job.OperationEnum.Encode:
-                return $"--jobs 16 --speed 6 \"{job.FilePath}\" \"{job.TargetFilePath}\"";
+                return $" \"{job.FilePath}\" \"{job.TargetFilePath}\"";
             case Job.OperationEnum.Decode:
-                return $"--jobs 16 \"{job.FilePath}\" \"{job.TargetFilePath}\"";
+                return $" \"{job.FilePath}\" \"{job.TargetFilePath}\"";
             default:
                 throw new Exception($"{job.Operation} should be Encode or Decode");
         }
@@ -220,18 +220,17 @@ public class Job : ObservableObject
         if (fileInfo == null)
             return OperationEnum.Undef;
 
-        switch (fileInfo.Extension.ToLowerInvariant())
+        var ext = fileInfo.Extension.ToLowerInvariant();
+
+        if (Constants.ExtensionsDecode.Any(e =>e==ext))
         {
-            case ".avif":
-                return OperationEnum.Decode;
-            case ".jpg":
-            case ".jpeg":
-            case ".png":
-            case ".y4m":
-                return OperationEnum.Encode;
-            default:
-                return OperationEnum.Undef;
+            return OperationEnum.Decode;
         }
+        if (Constants.ExtensionsEncode.Any(e => e == ext))
+        {
+            return OperationEnum.Encode;
+        }
+        return OperationEnum.Undef;
     }
 
     public static Job GetDesignDate(JobStateEnum state)
