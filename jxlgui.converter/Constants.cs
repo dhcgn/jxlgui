@@ -2,7 +2,7 @@
 
 public class Constants
 {
-    public static string[] ExtensionsEncode = {".png", ".apng", ".gif", ".jpeg", ".ppm", ".pfm", ".pgx"};
+    public static string[] ExtensionsEncode = {".png", ".apng", ".gif", ".jpeg", ".jpg", ".ppm", ".pfm", ".pgx"};
     public static string[] ExtensionsDecode = {".jxl"};
 
     public static string[] Extensions = ExtensionsEncode.Concat(ExtensionsDecode).ToArray();
