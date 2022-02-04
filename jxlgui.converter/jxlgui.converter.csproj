@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="assets\cjxl.exe" />
+    <None Remove="assets\djxl.exe" />
+    <None Remove="assets\LICENSE" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="assets\cjxl.exe" />
+    <EmbeddedResource Include="assets\djxl.exe" />
+    <EmbeddedResource Include="assets\LICENSE" />
+  </ItemGroup>
+
 </Project>
