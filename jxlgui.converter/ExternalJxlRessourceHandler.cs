@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace jxlgui.converter;
@@ -54,7 +55,7 @@ public class ExternalJxlRessourceHandler
             StartInfo = new ProcessStartInfo
             {
                 FileName = path,
-                Arguments = "--version",
+                Arguments = "-V",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 CreateNoWindow = true
@@ -70,7 +71,7 @@ public class ExternalJxlRessourceHandler
 
     private static string ParseVersion(string input)
     {
-        var r = Regex.Match(input, @"Version: (\d{1,}.\d{1,}.\d{1,})");
+        var r = Regex.Match(input, @"v(\d{1,}.\d{1,}.\d{1,})");
         if (r.Groups.Count != 2) return null;
 
         return r.Groups[1].Value;
@@ -80,5 +81,26 @@ public class ExternalJxlRessourceHandler
     {
         public JxlFileResultEnum Result { get; init; }
         public string Version { get; init; }
+    }
+
+    public static void SaveFiles()
+    {
+        Directory.CreateDirectory(Constants.AppFolder);
+
+        WriteResourceToFile("cjxl.exe", Constants.EncoderFilePath);
+        WriteResourceToFile("djxl.exe", Constants.DecoderFilePath);
+    }
+
+    private static void WriteResourceToFile(string resourceName, string fileName)
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        var name = assembly.GetManifestResourceNames().First(n => n.EndsWith(resourceName));
+        using (var resource = assembly.GetManifestResourceStream(name))
+        {
+            using (var file = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                resource.CopyTo(file);
+            }
+        }
     }
 }

@@ -15,8 +15,8 @@ namespace jxlgui.wpf.ViewModels;
 
 internal class MainViewModel : ObservableRecipient
 {
-    private string avifDecVersion = "UNDEF";
-    private string avifEncVersion = "UNDEF";
+    private string _jxlDecVersion = "UNDEF";
+    private string _jxlEncVersion = "UNDEF";
 
     private bool canEncode;
 
@@ -56,16 +56,16 @@ internal class MainViewModel : ObservableRecipient
 
     public ObservableCollection<Job> Jobs { get; } = new();
 
-    public string AvifEncVersion
+    public string JxlEncVersion
     {
-        get => avifEncVersion;
-        set => SetProperty(ref avifEncVersion, value);
+        get => _jxlEncVersion;
+        set => SetProperty(ref _jxlEncVersion, value);
     }
 
-    public string AvifDecVersion
+    public string JxlDecVersion
     {
-        get => avifDecVersion;
-        set => SetProperty(ref avifDecVersion, value);
+        get => _jxlDecVersion;
+        set => SetProperty(ref _jxlDecVersion, value);
     }
 
     public RelayCommand ShowSettingsCommand { get; set; }
@@ -101,29 +101,31 @@ internal class MainViewModel : ObservableRecipient
 
     private async Task OnLoadCommandHandlingAsync()
     {
-        void SetVersion(Action<string> Set, ExternalJxlRessourceHandler.JxlFileResult avifFileResult)
+        void SetVersion(Action<string> Set, ExternalJxlRessourceHandler.JxlFileResult jxlFileResult)
         {
-            if (avifFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.FileNotFound)
+            if (jxlFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.FileNotFound)
             {
                 Set("FILE NOT FOUND");
                 CanEncode = false;
             }
-            else if (avifFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.VersionNotReadable)
+            else if (jxlFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.VersionNotReadable)
             {
                 Set("ERROR");
                 CanEncode = false;
             }
-            else if (avifFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.OK)
+            else if (jxlFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.OK)
             {
-                Set(avifFileResult.Version);
+                Set(jxlFileResult.Version);
                 CanEncode = true;
             }
         }
 
+        ExternalJxlRessourceHandler.SaveFiles();
+
         await Task.Factory.StartNew(() =>
         {
-            SetVersion(s => AvifEncVersion = s, ExternalJxlRessourceHandler.GetEncoderInformation());
-            SetVersion(s => AvifDecVersion = s, ExternalJxlRessourceHandler.GetDecoderInformation());
+            SetVersion(s => JxlEncVersion = s, ExternalJxlRessourceHandler.GetEncoderInformation());
+            SetVersion(s => JxlDecVersion = s, ExternalJxlRessourceHandler.GetDecoderInformation());
         });
     }
 }

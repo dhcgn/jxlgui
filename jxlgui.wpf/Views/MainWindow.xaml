@@ -92,7 +92,7 @@
             <TextBlock Text="JXL ENC" Background="{StaticResource FooterBackground}"
                        Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
             <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
-                <TextBlock Text="{Binding AvifEncVersion}" VerticalAlignment="Center" Padding="5,0"
+                <TextBlock Text="{Binding JxlEncVersion}" VerticalAlignment="Center" Padding="5,0"
                            Foreground="{StaticResource FooterText}" />
             </Border>
             <Border Width="5" />
@@ -100,7 +100,7 @@
             <TextBlock Text="JXL DEC" Background="{StaticResource FooterBackground}"
                        Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
             <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
-                <TextBlock Text="{Binding AvifDecVersion}" VerticalAlignment="Center" Padding="5,0"
+                <TextBlock Text="{Binding JxlDecVersion}" VerticalAlignment="Center" Padding="5,0"
                            Foreground="{StaticResource FooterText}" />
             </Border>
             <Border Width="5" />

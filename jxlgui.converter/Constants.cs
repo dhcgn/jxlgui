@@ -12,12 +12,12 @@ public class Constants
 
 
     /// <summary>
-    ///     JPEG XL decoder
+    ///     JPEG XL decoder (djxl.exe)
     /// </summary>
     public static string DecoderFilePath => Path.Combine(AppFolder, "djxl.exe");
 
     /// <summary>
-    ///     JPEG XL encoder
+    ///     JPEG XL encoder (cjxl.exe)
     /// </summary>
     public static string EncoderFilePath => Path.Combine(AppFolder, "cjxl.exe");
 
