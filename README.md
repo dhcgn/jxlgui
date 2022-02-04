@@ -1,3 +1,4 @@
+[![.NET](https://github.com/dhcgn/jxlgui/actions/workflows/dotnet.yml/badge.svg)](https://github.com/dhcgn/jxlgui/actions/workflows/dotnet.yml)
 # jxlgui
 Windows Desktop App to convert images to JPEG XL files
 
