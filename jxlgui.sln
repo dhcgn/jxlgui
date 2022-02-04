@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jxlgui.converter", "jxlgui.converter\jxlgui.converter.csproj", "{F61B084D-5C17-4C39-B85F-5395A2E07ADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jxlgui.wpf", "jxlgui.wpf\jxlgui.wpf.csproj", "{505A1098-D0BE-4D59-B185-03B50C81D8B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F61B084D-5C17-4C39-B85F-5395A2E07ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F61B084D-5C17-4C39-B85F-5395A2E07ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F61B084D-5C17-4C39-B85F-5395A2E07ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F61B084D-5C17-4C39-B85F-5395A2E07ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505A1098-D0BE-4D59-B185-03B50C81D8B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505A1098-D0BE-4D59-B185-03B50C81D8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505A1098-D0BE-4D59-B185-03B50C81D8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505A1098-D0BE-4D59-B185-03B50C81D8B4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
