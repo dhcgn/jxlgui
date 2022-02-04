@@ -3,30 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:jxlgui.wpf"
         xmlns:viewModels="clr-namespace:jxlgui.wpf.ViewModels"
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:converter="clr-namespace:jxlgui.wpf.Converter"
         mc:Ignorable="d"
-        Title="jxl gui" 
+        Title="jxl gui"
         Height="369" Width="600"
         MinHeight="369" MinWidth="600"
-        Background="#1F1F1F"
-        >
+        Background="#1F1F1F">
 
     <Window.Resources>
         <converter:VisiblityStringAnyConverter x:Key="VisibilityStringAnyConverter" />
         <converter:JobStatusBrushConverter x:Key="JobStatusBrushConverter" />
-        <converter:VisiblityInverterConverter x:Key="VisibilityInverterConverter" />
-        <Style x:Key="FooterStyle" TargetType="FrameworkElement">
-            <Setter Property="FrameworkElement.Margin" Value="2" />
-            <Setter Property="Control.Padding" Value="5,2" />
-            <Setter Property="Control.FontSize" Value="10" />
-            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center" />
-            <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
-            <Setter Property="Control.HorizontalContentAlignment" Value="Center" />
-            <Setter Property="Control.VerticalContentAlignment" Value="Center" />
-        </Style>
 
         <SolidColorBrush x:Key="FooterBackground" Color="#7F7F7F" />
         <SolidColorBrush x:Key="FooterHeaderText" Color="#383838" />
@@ -54,7 +42,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="PREVIEW! Expect nothing!" Foreground="#CCC732"/>
+        <TextBlock Text="PREVIEW! Expect nothing!" Foreground="#CCC732" />
 
         <Border Grid.Row="0" Drop="Border_Drop" AllowDrop="True" DragOver="Border_DragOver" BorderBrush="Gray"
                 Background="#6F6F6F"
@@ -93,21 +81,27 @@
         </ItemsControl>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
-            <TextBlock Text="APP" Background="{StaticResource FooterBackground}" Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
+            <TextBlock Text="APP" Background="{StaticResource FooterBackground}"
+                       Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
             <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
-                <TextBlock Text="0.0.0" VerticalAlignment="Center" Padding="5,0" Foreground="{StaticResource FooterText}" />
+                <TextBlock Text="0.0.0" VerticalAlignment="Center" Padding="5,0"
+                           Foreground="{StaticResource FooterText}" />
             </Border>
             <Border Width="5" />
 
-            <TextBlock Text="JXL ENC" Background="{StaticResource FooterBackground}" Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
+            <TextBlock Text="JXL ENC" Background="{StaticResource FooterBackground}"
+                       Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
             <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
-                <TextBlock Text="{Binding AvifEncVersion}" VerticalAlignment="Center" Padding="5,0" Foreground="{StaticResource FooterText}" />
+                <TextBlock Text="{Binding AvifEncVersion}" VerticalAlignment="Center" Padding="5,0"
+                           Foreground="{StaticResource FooterText}" />
             </Border>
             <Border Width="5" />
 
-            <TextBlock Text="JXL DEC" Background="{StaticResource FooterBackground}" Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
+            <TextBlock Text="JXL DEC" Background="{StaticResource FooterBackground}"
+                       Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
             <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
-                <TextBlock Text="{Binding AvifDecVersion}" VerticalAlignment="Center" Padding="5,0" Foreground="{StaticResource FooterText}"  />
+                <TextBlock Text="{Binding AvifDecVersion}" VerticalAlignment="Center" Padding="5,0"
+                           Foreground="{StaticResource FooterText}" />
             </Border>
             <Border Width="5" />
 

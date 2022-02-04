@@ -1,11 +1,10 @@
 ﻿using Microsoft.Toolkit.Mvvm.Messaging.Messages;
 
-namespace jxlgui.wpf.Messenger
+namespace jxlgui.wpf.Messenger;
+
+public class FileDroppedMessage : ValueChangedMessage<string>
 {
-    public class FileDroppedMessage : ValueChangedMessage<string>
+    public FileDroppedMessage(string value) : base(value)
     {
-        public FileDroppedMessage(string value) : base(value)
-        {
-        }
     }
 }

@@ -1,16 +1,15 @@
 ﻿using Microsoft.Toolkit.Mvvm.Messaging.Messages;
 
-namespace jxlgui.wpf.Messenger
-{
-    internal class WindowMessage : ValueChangedMessage<WindowEnum>
-    {
-        public WindowMessage(WindowEnum value) : base(value)
-        {
-        }
-    }
+namespace jxlgui.wpf.Messenger;
 
-    public enum WindowEnum
+internal class WindowMessage : ValueChangedMessage<WindowEnum>
+{
+    public WindowMessage(WindowEnum value) : base(value)
     {
-        SettingsWindows
     }
+}
+
+public enum WindowEnum
+{
+    SettingsWindows
 }

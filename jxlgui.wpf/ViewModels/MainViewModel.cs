@@ -11,119 +11,119 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 
-namespace jxlgui.wpf.ViewModels
+namespace jxlgui.wpf.ViewModels;
+
+internal class MainViewModel : ObservableRecipient
 {
-    internal class MainViewModel : ObservableRecipient
+    private string avifDecVersion = "UNDEF";
+    private string avifEncVersion = "UNDEF";
+
+    private bool canEncode;
+
+    public MainViewModel()
     {
-        private string avifDecVersion = "UNDEF";
-        private string avifEncVersion = "UNDEF";
+        OnLoadCommand = new AsyncRelayCommand(OnLoadCommandHandlingAsync);
+        JobManager jm = new();
 
-        private bool canEncode;
-
-        public MainViewModel()
+        WeakReferenceMessenger.Default.Register<FileDroppedMessage>(this, (r, m) =>
         {
-            this.OnLoadCommand = new AsyncRelayCommand(this.OnLoadCommandHandlingAsync);
-            JobManager jm = new ();
+            if (!CanEncode)
+                return;
 
-            WeakReferenceMessenger.Default.Register<FileDroppedMessage>(this, (r, m) =>
+            var job = Job.Create(m.Value);
+            jm.Add(job);
+            Jobs.Add(job);
+        });
+
+        ShowSettingsCommand =
+            new RelayCommand(() => Messenger.Send(new WindowMessage(WindowEnum.SettingsWindows)));
+        OpenEncoderInstallWikiCommand = new RelayCommand(() =>
+            OpenUrl("https://github.com/dhcgn/avif_encoder_gui/wiki/Install-AVIF-Encoder-and-AVIF-Decoder"));
+
+        Configs = new List<string> {"built in"};
+        SelectedConfig = Configs.First();
+
+        if (InDesignMode())
+        {
+            Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Pending));
+            Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Working));
+            Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Done));
+            Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Error));
+
+            CanEncode = false;
+        }
+    }
+
+    public ObservableCollection<Job> Jobs { get; } = new();
+
+    public string AvifEncVersion
+    {
+        get => avifEncVersion;
+        set => SetProperty(ref avifEncVersion, value);
+    }
+
+    public string AvifDecVersion
+    {
+        get => avifDecVersion;
+        set => SetProperty(ref avifDecVersion, value);
+    }
+
+    public RelayCommand ShowSettingsCommand { get; set; }
+    public RelayCommand OpenEncoderInstallWikiCommand { get; set; }
+    public List<string> Configs { get; }
+    public string SelectedConfig { get; set; }
+    public IAsyncRelayCommand OnLoadCommand { get; }
+
+    public bool CanEncode
+    {
+        get => canEncode;
+        set => SetProperty(ref canEncode, value);
+    }
+
+    private void OpenUrl(string url)
+    {
+        try
+        {
+            Process.Start(url);
+        }
+        catch
+        {
+            // hack because of this: https://github.com/dotnet/corefx/issues/10361
+            url = url.Replace("&", "^&");
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") {CreateNoWindow = true});
+        }
+    }
+
+    public static bool InDesignMode()
+    {
+        return !(Application.Current is App);
+    }
+
+    private async Task OnLoadCommandHandlingAsync()
+    {
+        void SetVersion(Action<string> Set, ExternalJxlRessourceHandler.JxlFileResult avifFileResult)
+        {
+            if (avifFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.FileNotFound)
             {
-                if (!this.CanEncode)
-                    return;
-
-                var job = Job.Create(m.Value);
-                jm.Add(job);
-                this.Jobs.Add(job);
-            });
-
-            this.ShowSettingsCommand =
-                new RelayCommand(() => this.Messenger.Send(new WindowMessage(WindowEnum.SettingsWindows)));
-            this.OpenEncoderInstallWikiCommand = new RelayCommand(() => this.OpenUrl("https://github.com/dhcgn/avif_encoder_gui/wiki/Install-AVIF-Encoder-and-AVIF-Decoder"));
-
-            this.Configs = new List<string>() {"built in"};
-            this.SelectedConfig = Configs.First();
-
-            if (InDesignMode())
+                Set("FILE NOT FOUND");
+                CanEncode = false;
+            }
+            else if (avifFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.VersionNotReadable)
             {
-                this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Pending));
-                this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Working));
-                this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Done));
-                this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Error));
-
-                this.CanEncode = false;
+                Set("ERROR");
+                CanEncode = false;
+            }
+            else if (avifFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.OK)
+            {
+                Set(avifFileResult.Version);
+                CanEncode = true;
             }
         }
 
-        public ObservableCollection<Job> Jobs { get; } = new();
-
-        public string AvifEncVersion
+        await Task.Factory.StartNew(() =>
         {
-            get => this.avifEncVersion;
-            set => this.SetProperty(ref this.avifEncVersion, value);
-        }
-
-        public string AvifDecVersion
-        {
-            get => this.avifDecVersion;
-            set => this.SetProperty(ref this.avifDecVersion, value);
-        }
-
-        public RelayCommand ShowSettingsCommand { get; set; }
-        public RelayCommand OpenEncoderInstallWikiCommand { get; set; }
-        public List<string> Configs { get; private set; }
-        public string SelectedConfig { get;  set; }
-        public IAsyncRelayCommand OnLoadCommand { get; }
-
-        public bool CanEncode
-        {
-            get => this.canEncode;
-            set => this.SetProperty(ref this.canEncode, value);
-        }
-
-        private void OpenUrl(string url)
-        {
-            try
-            {
-                Process.Start(url);
-            }
-            catch
-            {
-                // hack because of this: https://github.com/dotnet/corefx/issues/10361
-                url = url.Replace("&", "^&");
-                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") {CreateNoWindow = true});
-            }
-        }
-
-        public static bool InDesignMode()
-        {
-            return !(Application.Current is App);
-        }
-
-        private async Task OnLoadCommandHandlingAsync()
-        {
-            void SetVersion(Action<string> Set, ExternalJxlRessourceHandler.JxlFileResult avifFileResult)
-            {
-                if (avifFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.FileNotFound)
-                {
-                    Set("FILE NOT FOUND");
-                    this.CanEncode = false;
-                }
-                else if (avifFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.VersionNotReadable)
-                {
-                    Set("ERROR");
-                    this.CanEncode = false;
-                }
-                else if (avifFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.OK)
-                {
-                    Set(avifFileResult.Version);
-                    this.CanEncode = true;
-                }
-            }
-
-            await Task.Factory.StartNew(() =>
-            {
-                SetVersion(s => this.AvifEncVersion = s, ExternalJxlRessourceHandler.GetEncoderInformation());
-                SetVersion(s => this.AvifDecVersion = s, ExternalJxlRessourceHandler.GetDecoderInformation());
-            });
-        }
+            SetVersion(s => AvifEncVersion = s, ExternalJxlRessourceHandler.GetEncoderInformation());
+            SetVersion(s => AvifDecVersion = s, ExternalJxlRessourceHandler.GetDecoderInformation());
+        });
     }
 }
