@@ -1,0 +1,121 @@
+﻿<Window x:Class="jxlgui.wpf.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:jxlgui.wpf"
+        xmlns:viewModels="clr-namespace:jxlgui.wpf.ViewModels"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:converter="clr-namespace:jxlgui.wpf.Converter"
+        mc:Ignorable="d"
+        Title="jxl gui" 
+        Height="369" Width="600"
+        MinHeight="369" MinWidth="600"
+        Background="#1F1F1F"
+        >
+
+    <Window.Resources>
+        <converter:VisiblityStringAnyConverter x:Key="VisibilityStringAnyConverter" />
+        <converter:JobStatusBrushConverter x:Key="JobStatusBrushConverter" />
+        <converter:VisiblityInverterConverter x:Key="VisibilityInverterConverter" />
+        <Style x:Key="FooterStyle" TargetType="FrameworkElement">
+            <Setter Property="FrameworkElement.Margin" Value="2" />
+            <Setter Property="Control.Padding" Value="5,2" />
+            <Setter Property="Control.FontSize" Value="10" />
+            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center" />
+            <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
+            <Setter Property="Control.HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Control.VerticalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding OnLoadCommand}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+
+    <Window.DataContext>
+        <viewModels:MainViewModel x:Name="ViewModel" />
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="PREVIEW! Expect nothing!" />
+
+        <Border Grid.Row="0" Drop="Border_Drop" AllowDrop="True" DragOver="Border_DragOver" BorderBrush="Gray"
+                Background="Beige"
+                BorderThickness="0.5" Margin="20">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock IsHitTestVisible="False"
+                           TextAlignment="Center"
+                           Text="Drop jpg, jpeg, png, y4m or avif file here" />
+                <TextBlock Text="Need AVIF encoder, click 'Download AVIF' and restart!"
+                           FontWeight="Bold"
+                           Foreground="Red"
+                           TextAlignment="Center"
+                           Visibility="{Binding CanEncode, Converter={StaticResource VisibilityInverterConverter}}" />
+            </StackPanel>
+        </Border>
+
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Jobs}" Margin="20,0,20,20">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Gray" BorderThickness="0.5" Margin="2" Padding="2"
+                            Background="{Binding State, Converter={StaticResource JobStatusBrushConverter}}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding FileName}" FontSize="8" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding FormattedLength}" FontSize="8" />
+                                <TextBlock Text=" -> " FontSize="8"
+                                           Visibility="{Binding TargetFileFormattedLength, Converter={StaticResource VisibilityStringAnyConverter}}" />
+                                <TextBlock Text="{Binding TargetFileFormattedLength}" FontSize="8" />
+                            </StackPanel>
+
+                            <TextBlock Text="{Binding State}" FontStyle="Italic" FontSize="8" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
+            <TextBlock Text="APP" Background="Blue" Foreground="White" FontWeight="Bold" Padding="5" />
+            <Border BorderBrush="Blue" BorderThickness="2">
+                <TextBlock Text="0.0.0" VerticalAlignment="Center" Padding="5,0" />
+            </Border>
+            <Border Width="5" />
+
+            <TextBlock Text="AVIF ENC" Background="Blue" Foreground="White" FontWeight="Bold" Padding="5" />
+            <Border BorderBrush="Blue" BorderThickness="2">
+                <TextBlock Text="{Binding AvifEncVersion}" VerticalAlignment="Center" Padding="5,0" />
+            </Border>
+            <Border Width="5" />
+
+            <TextBlock Text="AVIF DEC" Background="Blue" Foreground="White" FontWeight="Bold" Padding="5" />
+            <Border BorderBrush="Blue" BorderThickness="2">
+                <TextBlock Text="{Binding AvifDecVersion}" VerticalAlignment="Center" Padding="5,0" />
+            </Border>
+            <Border Width="5" />
+
+            <Button Content="Download AVIF" Style="{StaticResource FooterStyle}"
+                    Command="{Binding OpenEncoderInstallWikiCommand}" />
+            <Button Content="Settings" Style="{StaticResource FooterStyle}" Command="{Binding ShowSettingsCommand}" />
+            <TextBlock Text="Selected:" Style="{StaticResource FooterStyle}" />
+            <ComboBox ItemsSource="{Binding Configs}" Style="{StaticResource FooterStyle}"
+                      SelectedItem="{Binding SelectedConfig}" />
+        </StackPanel>
+    </Grid>
+</Window>
