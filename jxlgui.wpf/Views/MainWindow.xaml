@@ -27,6 +27,12 @@
             <Setter Property="Control.HorizontalContentAlignment" Value="Center" />
             <Setter Property="Control.VerticalContentAlignment" Value="Center" />
         </Style>
+
+        <SolidColorBrush x:Key="FooterBackground" Color="#7F7F7F" />
+        <SolidColorBrush x:Key="FooterHeaderText" Color="#383838" />
+        <SolidColorBrush x:Key="FooterText" Color="#7F7F7F" />
+
+
     </Window.Resources>
 
     <b:Interaction.Triggers>
@@ -48,20 +54,15 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="PREVIEW! Expect nothing!" />
+        <TextBlock Text="PREVIEW! Expect nothing!" Foreground="DarkRed"/>
 
         <Border Grid.Row="0" Drop="Border_Drop" AllowDrop="True" DragOver="Border_DragOver" BorderBrush="Gray"
-                Background="Beige"
+                Background="#6F6F6F"
                 BorderThickness="0.5" Margin="20">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock IsHitTestVisible="False"
                            TextAlignment="Center"
                            Text="Drop jpg, jpeg, png, y4m or avif file here" />
-                <TextBlock Text="Need AVIF encoder, click 'Download AVIF' and restart!"
-                           FontWeight="Bold"
-                           Foreground="Red"
-                           TextAlignment="Center"
-                           Visibility="{Binding CanEncode, Converter={StaticResource VisibilityInverterConverter}}" />
             </StackPanel>
         </Border>
 
@@ -92,30 +93,24 @@
         </ItemsControl>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
-            <TextBlock Text="APP" Background="Blue" Foreground="White" FontWeight="Bold" Padding="5" />
-            <Border BorderBrush="Blue" BorderThickness="2">
-                <TextBlock Text="0.0.0" VerticalAlignment="Center" Padding="5,0" />
+            <TextBlock Text="APP" Background="{StaticResource FooterBackground}" Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
+            <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
+                <TextBlock Text="0.0.0" VerticalAlignment="Center" Padding="5,0" Foreground="{StaticResource FooterText}" />
             </Border>
             <Border Width="5" />
 
-            <TextBlock Text="AVIF ENC" Background="Blue" Foreground="White" FontWeight="Bold" Padding="5" />
-            <Border BorderBrush="Blue" BorderThickness="2">
-                <TextBlock Text="{Binding AvifEncVersion}" VerticalAlignment="Center" Padding="5,0" />
+            <TextBlock Text="JXL ENC" Background="{StaticResource FooterBackground}" Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
+            <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
+                <TextBlock Text="{Binding AvifEncVersion}" VerticalAlignment="Center" Padding="5,0" Foreground="{StaticResource FooterText}" />
             </Border>
             <Border Width="5" />
 
-            <TextBlock Text="AVIF DEC" Background="Blue" Foreground="White" FontWeight="Bold" Padding="5" />
-            <Border BorderBrush="Blue" BorderThickness="2">
-                <TextBlock Text="{Binding AvifDecVersion}" VerticalAlignment="Center" Padding="5,0" />
+            <TextBlock Text="JXL DEC" Background="{StaticResource FooterBackground}" Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
+            <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
+                <TextBlock Text="{Binding AvifDecVersion}" VerticalAlignment="Center" Padding="5,0" Foreground="{StaticResource FooterText}"  />
             </Border>
             <Border Width="5" />
 
-            <Button Content="Download AVIF" Style="{StaticResource FooterStyle}"
-                    Command="{Binding OpenEncoderInstallWikiCommand}" />
-            <Button Content="Settings" Style="{StaticResource FooterStyle}" Command="{Binding ShowSettingsCommand}" />
-            <TextBlock Text="Selected:" Style="{StaticResource FooterStyle}" />
-            <ComboBox ItemsSource="{Binding Configs}" Style="{StaticResource FooterStyle}"
-                      SelectedItem="{Binding SelectedConfig}" />
         </StackPanel>
     </Grid>
 </Window>
