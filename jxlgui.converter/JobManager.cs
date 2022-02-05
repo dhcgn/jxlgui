@@ -27,6 +27,7 @@ public class JobManager
             var result = await ExecuteImageOperationAsync(job);
 
             job.State = result.State;
+            job.ProcessOutput = result.Output;
         }
 
         return 0;
@@ -39,10 +40,15 @@ public class JobManager
 
         var r = await RunProcessAsync(filename, arguments);
 
+
+        var state = r.returnCode == 0 ? Job.JobStateEnum.Done : Job.JobStateEnum.Error;
+
         return new ExecuteImageOperationResult
         {
-            State = Job.JobStateEnum.Done
+            State = state,
+            Output = r.output,
         };
+
     }
 
     private static string GetArguments(Job job)
@@ -86,7 +92,6 @@ public class JobManager
         }
     }
 
-    // TODO Error Handling and output
     private static Task<(int returnCode, string output)> RunProcessAsync(string fileName, string arguments)
     {
         var tcs = new TaskCompletionSource<(int returnCode, string output)>();
@@ -100,6 +105,7 @@ public class JobManager
                 WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
+                RedirectStandardError = true,
                 CreateNoWindow = true
             },
             EnableRaisingEvents = true
@@ -111,6 +117,8 @@ public class JobManager
             var line = "";
             while (!process.StandardOutput.EndOfStream)
                 line += process.StandardOutput.ReadLine() + Environment.NewLine;
+            while (!process.StandardError.EndOfStream)
+                line += process.StandardError.ReadLine() + Environment.NewLine;
 
             tcs.SetResult((process.ExitCode, line));
             process.Dispose();
@@ -124,6 +132,7 @@ public class JobManager
     private class ExecuteImageOperationResult
     {
         public Job.JobStateEnum State { get; internal set; }
+        public string Output { get; set; }
     }
 }
 
@@ -186,6 +195,8 @@ public class Job : ObservableObject
         internal set => SetProperty(ref targetFileFormattedLength, value);
     }
 
+    public string ProcessOutput { get; set; }
+
     public static Job Create(string filepath)
     {
         var fi = new FileInfo(filepath);
@@ -201,7 +212,7 @@ public class Job : ObservableObject
 
     private static string GetFormattedLength(double len)
     {
-        string[] sizes = {"B", "KB", "MB", "GB", "TB"};
+        string[] sizes = { "B", "KB", "MB", "GB", "TB" };
         var order = 0;
         while (len >= 1024 && order < sizes.Length - 1)
         {
@@ -222,7 +233,7 @@ public class Job : ObservableObject
 
         var ext = fileInfo.Extension.ToLowerInvariant();
 
-        if (Constants.ExtensionsDecode.Any(e =>e==ext))
+        if (Constants.ExtensionsDecode.Any(e => e == ext))
         {
             return OperationEnum.Decode;
         }

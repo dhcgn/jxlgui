@@ -64,6 +64,9 @@
                 <DataTemplate>
                     <Border BorderBrush="Gray" BorderThickness="0.5" Margin="2" Padding="2"
                             Background="{Binding State, Converter={StaticResource JobStatusBrushConverter}}">
+                        <Border.ToolTip>
+                            <TextBlock Text="{Binding ProcessOutput}"></TextBlock>
+                        </Border.ToolTip>
                         <StackPanel>
                             <TextBlock Text="{Binding FileName}" FontSize="8" />
                             <StackPanel Orientation="Horizontal">
