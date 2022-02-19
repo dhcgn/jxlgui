@@ -30,8 +30,13 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Publish
       run: dotnet publish -c Release -o output
+    - name: minisign-cli
+      uses: thomasdesr/minisign-action@v1.1
+      with:
+        args: -Sm .\output\jxlgui.wpf.exe
+        minisign_key: ${{ secrets.SuperSecret }}
     - name: Compress Publish
-      run: Compress-Archive -Path .\output\jxlgui.wpf.exe .\output\jxlgui.wpf.exe.zip    
+      run: Compress-Archive -Path .\output\jxlgui.wpf.exe* .\output\jxlgui.wpf.exe.zip    
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v2.3.1
       with:
