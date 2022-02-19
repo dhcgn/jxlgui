@@ -12,4 +12,9 @@ if ($LASTEXITCODE -eq 0)
     "0.0.0" > .\jxlgui.buildinfo\assets\version
 }
 
+# Check
+Write-Host ("::notice  title=commitid::{0}" -f (Get-Content .\jxlgui.buildinfo\assets\commitid))
+Write-Host ("::notice  title=date::{0}" -f (Get-Content .\jxlgui.buildinfo\assets\date))
+Write-Host ("::notice  title=version::{0}" -f (Get-Content .\jxlgui.buildinfo\assets\version))
+
 Exit 0
