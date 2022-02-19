@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace jxlgui.wpf.Converter;
 
-public class VisiblityStringAnyConverter : IValueConverter
+public class VisibilityStringAnyConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

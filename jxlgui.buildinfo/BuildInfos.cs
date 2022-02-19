@@ -1,27 +1,28 @@
 ﻿using System.Reflection;
 
 namespace jxlgui.buildinfo;
+
 public class BuildInfos
 {
-    public static BuildInfos Get()
-    {
-        return new BuildInfos();
-    }
-
     private BuildInfos()
     {
-        Version = GetStringFromFile("version");
-        CommitId = GetStringFromFile("commitid");
+        this.Version = GetStringFromFile("version");
+        this.CommitId = GetStringFromFile("commitid");
         // core.abbrev configuration variable (see git-config[1]).
         // int minimum_abbrev = 4, default_abbrev = 7;
-        CommitIdShort = GetStringFromFile("commitid").Substring(0, 20);
-        Date = GetStringFromFile("date");
+        this.CommitIdShort = GetStringFromFile("commitid").Substring(0, 20);
+        this.Date = GetStringFromFile("date");
     }
 
     public string Version { get; set; }
     public string CommitId { get; set; }
     public string CommitIdShort { get; set; }
     public string Date { get; set; }
+
+    public static BuildInfos Get()
+    {
+        return new BuildInfos();
+    }
 
     private static string GetStringFromFile(string resourceName)
     {

@@ -10,12 +10,12 @@ public class JobManager
 
     public JobManager()
     {
-        var consumerTask = ConsumeAsync(jobs);
+        var consumerTask = ConsumeAsync(this.jobs);
     }
 
     public void Add(Job job)
     {
-        jobs.Post(job);
+        this.jobs.Post(job);
     }
 
     private static async Task<int> ConsumeAsync(ISourceBlock<Job> source)
@@ -46,9 +46,8 @@ public class JobManager
         return new ExecuteImageOperationResult
         {
             State = state,
-            Output = r.output,
+            Output = r.output
         };
-
     }
 
     private static string GetArguments(Job job)
@@ -165,17 +164,17 @@ public class Job : ObservableObject
 
     public JobStateEnum State
     {
-        get => state;
+        get => this.state;
         internal set
         {
-            SetProperty(ref state, value);
-            if (value == JobStateEnum.Done && TargetFilePath != null)
+            this.SetProperty(ref this.state, value);
+            if (value == JobStateEnum.Done && this.TargetFilePath != null)
             {
-                var fi = new FileInfo(TargetFilePath);
+                var fi = new FileInfo(this.TargetFilePath);
                 if (fi.Exists)
                 {
-                    TargetFileLength = fi.Length;
-                    TargetFileFormattedLength = GetFormattedLength(fi.Length);
+                    this.TargetFileLength = fi.Length;
+                    this.TargetFileFormattedLength = GetFormattedLength(fi.Length);
                 }
             }
         }
@@ -183,7 +182,7 @@ public class Job : ObservableObject
 
     public FileInfo FileInfo { get; init; }
 
-    public OperationEnum Operation => GetOperation(FileInfo);
+    public OperationEnum Operation => this.GetOperation(this.FileInfo);
 
     public string FormattedLength { get; init; }
     public string TargetFilePath { get; internal set; }
@@ -191,8 +190,8 @@ public class Job : ObservableObject
 
     public string TargetFileFormattedLength
     {
-        get => targetFileFormattedLength;
-        internal set => SetProperty(ref targetFileFormattedLength, value);
+        get => this.targetFileFormattedLength;
+        internal set => this.SetProperty(ref this.targetFileFormattedLength, value);
     }
 
     public string ProcessOutput { get; set; }
@@ -222,7 +221,7 @@ public class Job : ObservableObject
 
         // Adjust the format string to your preferences. For example "{0:0.#}{1}" would
         // show a single decimal place, and no space.
-        var result = string.Format("{0:0.##} {1}", len, sizes[order]);
+        var result = $"{len:0.##} {sizes[order]}";
         return result;
     }
 
@@ -233,14 +232,8 @@ public class Job : ObservableObject
 
         var ext = fileInfo.Extension.ToLowerInvariant();
 
-        if (Constants.ExtensionsDecode.Any(e => e == ext))
-        {
-            return OperationEnum.Decode;
-        }
-        if (Constants.ExtensionsEncode.Any(e => e == ext))
-        {
-            return OperationEnum.Encode;
-        }
+        if (Constants.ExtensionsDecode.Any(e => e == ext)) return OperationEnum.Decode;
+        if (Constants.ExtensionsEncode.Any(e => e == ext)) return OperationEnum.Encode;
         return OperationEnum.Undef;
     }
 

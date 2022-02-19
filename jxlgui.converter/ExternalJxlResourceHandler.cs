@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace jxlgui.converter;
 
-public class ExternalJxlRessourceHandler
+public class ExternalJxlResourceHandler
 {
     public enum JxlFileResultEnum
     {
@@ -77,12 +77,6 @@ public class ExternalJxlRessourceHandler
         return r.Groups[1].Value;
     }
 
-    public class JxlFileResult
-    {
-        public JxlFileResultEnum Result { get; init; }
-        public string Version { get; init; }
-    }
-
     public static void SaveFiles()
     {
         Directory.CreateDirectory(Constants.AppFolder);
@@ -95,12 +89,17 @@ public class ExternalJxlRessourceHandler
     {
         var assembly = Assembly.GetExecutingAssembly();
         var name = assembly.GetManifestResourceNames().First(n => n.EndsWith(resourceName));
-        using (var resource = assembly.GetManifestResourceStream(name))
+
+        using var resource = assembly.GetManifestResourceStream(name);
+        using (var file = new FileStream(fileName, FileMode.Create, FileAccess.Write))
         {
-            using (var file = new FileStream(fileName, FileMode.Create, FileAccess.Write))
-            {
-                resource.CopyTo(file);
-            }
+            resource.CopyTo(file);
         }
+    }
+
+    public class JxlFileResult
+    {
+        public JxlFileResultEnum Result { get; init; }
+        public string Version { get; init; }
     }
 }

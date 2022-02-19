@@ -13,7 +13,7 @@
         Background="#1F1F1F">
 
     <Window.Resources>
-        <converter:VisiblityStringAnyConverter x:Key="VisibilityStringAnyConverter" />
+        <converter:VisibilityStringAnyConverter x:Key="VisibilityStringAnyConverter" />
         <converter:JobStatusBrushConverter x:Key="JobStatusBrushConverter" />
 
         <SolidColorBrush x:Key="FooterBackground" Color="#7F7F7F" />
@@ -65,7 +65,7 @@
                     <Border BorderBrush="Gray" BorderThickness="0.5" Margin="2" Padding="2"
                             Background="{Binding State, Converter={StaticResource JobStatusBrushConverter}}">
                         <Border.ToolTip>
-                            <TextBlock Text="{Binding ProcessOutput}"></TextBlock>
+                            <TextBlock Text="{Binding ProcessOutput}" />
                         </Border.ToolTip>
                         <StackPanel>
                             <TextBlock Text="{Binding FileName}" FontSize="8" />
@@ -85,43 +85,43 @@
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5">
-            <TextBlock Text="APP" Background="{StaticResource FooterBackground}"
-                       Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
-            
-            <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="APP" Background="{StaticResource FooterBackground}"
+                           Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
+
+                <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
                     <TextBlock Text="{Binding BuildInfos.Version}" VerticalAlignment="Center" Padding="5,0"
-                           Foreground="{StaticResource FooterText}" />
-            </Border>
-            <Border Width="5" />
+                               Foreground="{StaticResource FooterText}" />
+                </Border>
+                <Border Width="5" />
 
-            <TextBlock Text="JXL ENC" Background="{StaticResource FooterBackground}"
-                       Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
-            <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
-                <TextBlock Text="{Binding JxlEncVersion}" VerticalAlignment="Center" Padding="5,0"
-                           Foreground="{StaticResource FooterText}" />
-            </Border>
-            <Border Width="5" />
+                <TextBlock Text="JXL ENC" Background="{StaticResource FooterBackground}"
+                           Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
+                <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
+                    <TextBlock Text="{Binding JxlEncVersion}" VerticalAlignment="Center" Padding="5,0"
+                               Foreground="{StaticResource FooterText}" />
+                </Border>
+                <Border Width="5" />
 
-            <TextBlock Text="JXL DEC" Background="{StaticResource FooterBackground}"
-                       Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
-            <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
-                <TextBlock Text="{Binding JxlDecVersion}" VerticalAlignment="Center" Padding="5,0"
-                           Foreground="{StaticResource FooterText}" />
-            </Border>
-            <Border Width="5" />
+                <TextBlock Text="JXL DEC" Background="{StaticResource FooterBackground}"
+                           Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
+                <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
+                    <TextBlock Text="{Binding JxlDecVersion}" VerticalAlignment="Center" Padding="5,0"
+                               Foreground="{StaticResource FooterText}" />
+                </Border>
+                <Border Width="5" />
 
-        </StackPanel>
+            </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
                 <TextBlock Text="{Binding BuildInfos.CommitIdShort}" VerticalAlignment="Center" Padding="5,0"
                            Foreground="{StaticResource FooterText}" FontSize="8" HorizontalAlignment="Right" />
                 <TextBlock Text="{Binding BuildInfos.Date}" VerticalAlignment="Center" Padding="5,0"
-                           Foreground="{StaticResource FooterText}" FontSize="8" HorizontalAlignment="Right"  />
+                           Foreground="{StaticResource FooterText}" FontSize="8" HorizontalAlignment="Right" />
             </StackPanel>
         </Grid>
     </Grid>

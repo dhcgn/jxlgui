@@ -16,71 +16,67 @@ namespace jxlgui.wpf.ViewModels;
 
 internal class MainViewModel : ObservableRecipient
 {
-    private string _jxlDecVersion = "UNDEF";
-    private string _jxlEncVersion = "UNDEF";
-
     private bool canEncode;
-
-    public BuildInfos BuildInfos { get; } = BuildInfos.Get();
+    private string jxlDecVersion = "UNDEF";
+    private string jxlEncVersion = "UNDEF";
 
     public MainViewModel()
     {
-        OnLoadCommand = new AsyncRelayCommand(OnLoadCommandHandlingAsync);
+        this.OnLoadCommand = new AsyncRelayCommand(this.OnLoadCommandHandlingAsync);
         JobManager jm = new();
 
         WeakReferenceMessenger.Default.Register<FileDroppedMessage>(this, (r, m) =>
         {
-            if (!CanEncode)
+            if (!this.CanEncode)
                 return;
 
             var job = Job.Create(m.Value);
             jm.Add(job);
-            Jobs.Add(job);
+            this.Jobs.Add(job);
         });
 
-        ShowSettingsCommand =
-            new RelayCommand(() => Messenger.Send(new WindowMessage(WindowEnum.SettingsWindows)));
-        OpenEncoderInstallWikiCommand = new RelayCommand(() =>
-            OpenUrl("https://github.com/dhcgn/avif_encoder_gui/wiki/Install-AVIF-Encoder-and-AVIF-Decoder"));
+        this.ShowSettingsCommand =
+            new RelayCommand(() => this.Messenger.Send(new WindowMessage(WindowEnum.SettingsWindows)));
 
-        Configs = new List<string> {"built in"};
-        SelectedConfig = Configs.First();
+        this.Configs = new List<string> { "built in" };
+        this.SelectedConfig = this.Configs.First();
 
         if (InDesignMode())
         {
-            Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Pending));
-            Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Working));
-            Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Done));
-            Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Error));
+            this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Pending));
+            this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Working));
+            this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Done));
+            this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Error));
 
-            CanEncode = false;
+            this.CanEncode = false;
         }
     }
+
+    public BuildInfos BuildInfos { get; } = BuildInfos.Get();
 
     public ObservableCollection<Job> Jobs { get; } = new();
 
     public string JxlEncVersion
     {
-        get => _jxlEncVersion;
-        set => SetProperty(ref _jxlEncVersion, value);
+        get => this.jxlEncVersion;
+        set => this.SetProperty(ref this.jxlEncVersion, value);
     }
 
     public string JxlDecVersion
     {
-        get => _jxlDecVersion;
-        set => SetProperty(ref _jxlDecVersion, value);
+        get => this.jxlDecVersion;
+        set => this.SetProperty(ref this.jxlDecVersion, value);
     }
 
     public RelayCommand ShowSettingsCommand { get; set; }
-    public RelayCommand OpenEncoderInstallWikiCommand { get; set; }
     public List<string> Configs { get; }
     public string SelectedConfig { get; set; }
     public IAsyncRelayCommand OnLoadCommand { get; }
 
     public bool CanEncode
     {
-        get => canEncode;
-        set => SetProperty(ref canEncode, value);
+        get => this.canEncode;
+        set => this.SetProperty(ref this.canEncode, value);
     }
 
     private void OpenUrl(string url)
@@ -93,7 +89,7 @@ internal class MainViewModel : ObservableRecipient
         {
             // hack because of this: https://github.com/dotnet/corefx/issues/10361
             url = url.Replace("&", "^&");
-            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") {CreateNoWindow = true});
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
         }
     }
 
@@ -104,31 +100,31 @@ internal class MainViewModel : ObservableRecipient
 
     private async Task OnLoadCommandHandlingAsync()
     {
-        void SetVersion(Action<string> Set, ExternalJxlRessourceHandler.JxlFileResult jxlFileResult)
+        void SetVersion(Action<string> Set, ExternalJxlResourceHandler.JxlFileResult jxlFileResult)
         {
-            if (jxlFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.FileNotFound)
+            if (jxlFileResult.Result == ExternalJxlResourceHandler.JxlFileResultEnum.FileNotFound)
             {
                 Set("FILE NOT FOUND");
-                CanEncode = false;
+                this.CanEncode = false;
             }
-            else if (jxlFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.VersionNotReadable)
+            else if (jxlFileResult.Result == ExternalJxlResourceHandler.JxlFileResultEnum.VersionNotReadable)
             {
                 Set("ERROR");
-                CanEncode = false;
+                this.CanEncode = false;
             }
-            else if (jxlFileResult.Result == ExternalJxlRessourceHandler.JxlFileResultEnum.OK)
+            else if (jxlFileResult.Result == ExternalJxlResourceHandler.JxlFileResultEnum.OK)
             {
                 Set(jxlFileResult.Version);
-                CanEncode = true;
+                this.CanEncode = true;
             }
         }
 
-        ExternalJxlRessourceHandler.SaveFiles();
+        ExternalJxlResourceHandler.SaveFiles();
 
         await Task.Factory.StartNew(() =>
         {
-            SetVersion(s => JxlEncVersion = s, ExternalJxlRessourceHandler.GetEncoderInformation());
-            SetVersion(s => JxlDecVersion = s, ExternalJxlRessourceHandler.GetDecoderInformation());
+            SetVersion(s => this.JxlEncVersion = s, ExternalJxlResourceHandler.GetEncoderInformation());
+            SetVersion(s => this.JxlDecVersion = s, ExternalJxlResourceHandler.GetDecoderInformation());
         });
     }
 }

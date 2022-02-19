@@ -10,7 +10,7 @@ public class JobStatusBrushConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var converterValue = (Job.JobStateEnum) value;
+        var converterValue = (Job.JobStateEnum)value;
 
         switch (converterValue)
         {
