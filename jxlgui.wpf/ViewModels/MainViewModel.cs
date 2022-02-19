@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using jxlgui.buildinfo;
 using jxlgui.converter;
 using jxlgui.wpf.Messenger;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -19,6 +20,8 @@ internal class MainViewModel : ObservableRecipient
     private string _jxlEncVersion = "UNDEF";
 
     private bool canEncode;
+
+    public BuildInfos BuildInfos { get; } = BuildInfos.Get();
 
     public MainViewModel()
     {
