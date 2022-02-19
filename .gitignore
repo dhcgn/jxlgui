@@ -348,3 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+jxlgui.buildinfo/assets/commitid
+jxlgui.buildinfo/assets/date
+jxlgui.buildinfo/assets/version
