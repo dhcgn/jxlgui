@@ -34,7 +34,7 @@ jobs:
       env:
         MINISIGN_KEY: ${{ secrets.MINISIGN_KEY }}
       run: |
-        sign_file.ps1
+        .\sign_file.ps1 .\output\jxlgui.wpf.exe
     - name: Compress Publish
       run: Compress-Archive -Path .\output\jxlgui.wpf.exe* .\output\jxlgui.wpf.exe.zip    
     - name: Upload Build Artifact
