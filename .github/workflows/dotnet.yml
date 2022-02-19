@@ -17,6 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
+        fetch-depth: 0
         lfs: true
     - name: Set Build Infos
       run: |
