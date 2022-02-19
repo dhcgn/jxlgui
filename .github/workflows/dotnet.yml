@@ -33,7 +33,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish -c Release -o output
+      run: dotnet publish /p:PublishProfile=Portable -c Release -o output
     - shell: pwsh
       env:
         MINISIGN_KEY: ${{ secrets.MINISIGN_KEY }}

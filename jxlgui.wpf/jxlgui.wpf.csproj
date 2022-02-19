@@ -10,13 +10,6 @@
     <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <PublishSingleFile>true</PublishSingleFile>
-    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-    <PublishReadyToRun>true</PublishReadyToRun>
-  </PropertyGroup>
-
   <ItemGroup>
     <Content Include="Assets\Icon.ico" />
   </ItemGroup>
