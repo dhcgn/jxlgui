@@ -11,3 +11,5 @@ if ($LASTEXITCODE -eq 0)
 }else{
     "0.0.0" > .\jxlgui.buildinfo\assets\version
 }
+
+Exit 0
