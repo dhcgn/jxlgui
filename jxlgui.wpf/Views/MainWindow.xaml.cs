@@ -34,10 +34,12 @@ public partial class MainWindow : Window
         e.Effects = DragDropEffects.None;
         var droppedFileName = e.Data.GetData(DataFormats.FileDrop) as string[];
 
-        if (droppedFileName != null && droppedFileName.Any()
-                                    && droppedFileName.Select(f => Path.GetExtension(f))
-                                        .All(e => Constants.Extensions.Any(ee => ee == e)))
-            e.Effects = DragDropEffects.Copy | DragDropEffects.Move;
+        if (droppedFileName != null 
+            && droppedFileName.Any()
+            && droppedFileName.Select(f => Path.GetExtension(f)).All(e => Constants.Extensions.Any(ee => ee.ToLower() == e.ToLower())))
+            {
+                e.Effects = DragDropEffects.Copy | DragDropEffects.Move;
+            }         
 
         e.Handled = true;
     }
