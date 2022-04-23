@@ -239,6 +239,18 @@ public class Job : ObservableObject
 
     public static Job GetDesignDate(JobStateEnum state)
     {
+        if (state is JobStateEnum.Pending or JobStateEnum.Working)
+        {
+            return new Job
+            {
+                FileName = "pic1.png",
+                FilePath = "C:\\Users\\User\\Pictures\\pic1.png",
+                TargetFilePath = "C:\\Users\\User\\Pictures\\pic1.png.avif",
+                State = state,
+                FormattedLength = "131 KB",
+            };
+        }
+        
         return new Job
         {
             FileName = "pic1.png",
