@@ -14,6 +14,7 @@
 
     <Window.Resources>
         <converter:VisibilityStringAnyConverter x:Key="VisibilityStringAnyConverter" />
+        <converter:VisibilityNullConverter x:Key="VisibilityNullConverter" />
         <converter:JobStatusBrushConverter x:Key="JobStatusBrushConverter" />
 
         <SolidColorBrush x:Key="FooterBackground" Color="#7F7F7F" />
@@ -69,14 +70,19 @@
                         </Border.ToolTip>
                         <StackPanel>
                             <TextBlock Text="{Binding FileName}" FontSize="8" />
+                            <Border BorderBrush="Black" BorderThickness="0.1" Margin="0,1,0,5"></Border>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding FormattedLength}" FontSize="8" />
                                 <TextBlock Text=" -> " FontSize="8"
                                            Visibility="{Binding TargetFileFormattedLength, Converter={StaticResource VisibilityStringAnyConverter}}" />
                                 <TextBlock Text="{Binding TargetFileFormattedLength}" FontSize="8" />
                             </StackPanel>
-
-                            <TextBlock Text="{Binding State}" FontStyle="Italic" FontSize="8" />
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding Config, Converter={StaticResource VisibilityNullConverter}}">
+                                <TextBlock  FontSize="8" Text="{Binding Config.Quality, StringFormat=Quality: {0}}" />
+                                <Border Width="5"></Border>
+                                <TextBlock  FontSize="8" Text="{Binding Config.Effort, StringFormat=Effort: {0}}" />
+                            </StackPanel>
+                            <TextBlock Text="{Binding State}" FontStyle="Italic" FontSize="8" TextAlignment="Center" />
                         </StackPanel>
                     </Border>
                 </DataTemplate>
