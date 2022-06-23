@@ -49,6 +49,11 @@ internal class MainViewModel : ObservableRecipient
             this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Done));
             this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Error));
 
+            //for (int i = 0; i < 200; i++)
+            //{
+            //    this.Jobs.Add(Job.GetDesignDate(Job.JobStateEnum.Done));
+            //}
+
             this.CanEncode = false;
         }
     }

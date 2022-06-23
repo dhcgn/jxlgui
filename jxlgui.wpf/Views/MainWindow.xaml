@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="jxl gui"
         Height="369" Width="600"
-        MinHeight="369" MinWidth="600"
+        MinHeight="369" MinWidth="660"
         Background="#1F1F1F">
 
     <Window.Resources>
@@ -38,8 +38,8 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="90" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -56,6 +56,13 @@
         </Border>
 
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Jobs}" Margin="20,0,20,20">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel IsItemsHost="True" />
@@ -129,7 +136,7 @@
                 </Border>
                 <Border Width="5" />
                 <Button Content="Config" Padding="10,0" Command="{Binding ShowSettingsCommand}" />
-                <Button Content="Help" Padding="10,0" Command="{Binding OpenHelpCommand}"></Button>
+                <Button Content="Help" Padding="10,0" Margin="10,0,0,0" Command="{Binding OpenHelpCommand}"></Button>
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
