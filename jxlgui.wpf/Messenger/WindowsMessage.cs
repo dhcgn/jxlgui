@@ -11,5 +11,6 @@ internal class WindowMessage : ValueChangedMessage<WindowEnum>
 
 public enum WindowEnum
 {
-    SettingsWindows
+    SettingsWindows,
+    SettingsWindowsClose
 }
