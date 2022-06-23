@@ -1,5 +1,7 @@
 ﻿
+using System.IO;
 using System.Text.Json;
+using jxlgui.converter;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -9,21 +11,34 @@ public class SettingsViewModel : ObservableRecipient
 {
     public SettingsViewModel()
     {
-        this.SaveCommand = new RelayCommand(() => { }, () => false);
+        this.SaveCommand = new RelayCommand(SaveCommandHandling, () => jxlgui.converter.Config.IsJsonValid(this.Config));
         this.CancelCommand = new RelayCommand(() => { }, () => false);
 
-        var config = jxlgui.converter.Config.CreateEmpty();
-        var jsonConfig = new JsonSerializerOptions
-        {
-            WriteIndented = true
-        };
-        var jsonString = JsonSerializer.Serialize(config, jsonConfig);
+        var c = jxlgui.converter.Config.LoadOrCreateNew();
+        this.Config = c.ToJson();
+    }
 
-        this.Config = jsonString;
+    private void SaveCommandHandling()
+    {
+        if (!jxlgui.converter.Config.IsJsonValid(this.Config))
+        {
+            System.Windows.MessageBox.Show("Config is not valid");
+            return;
+        }
+
+        File.WriteAllText(Constants.ConfigPath, this.Config);
+
+        this.Config = jxlgui.converter.Config.Load()?.ToJson();
     }
 
     public RelayCommand OnLoadCommand { get; set; }
     public RelayCommand SaveCommand { get; set; }
     public RelayCommand CancelCommand { get; set; }
-    public string Config { get; set; }
+
+    private string config;
+    public string Config
+    {
+        get => config;
+        set => this.SetProperty(ref this.config, value);
+    }
 }

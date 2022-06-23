@@ -22,8 +22,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBox Padding="5" FontFamily="Consolas" FontSize="10" AcceptsReturn="True" AcceptsTab="True"
-                 ScrollViewer.VerticalScrollBarVisibility="Visible" Text="{Binding Config}" />
+        <TextBox Padding="5" FontFamily="Consolas" FontSize="12" AcceptsReturn="True" AcceptsTab="True"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible" Text="{Binding Config, UpdateSourceTrigger=PropertyChanged}" />
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Save" Margin="10" Padding="5" Command="{Binding SaveCommand}" />
             <Button Content="Cancel" Margin="10" Padding="5" Command="{Binding CancelCommand}" />
