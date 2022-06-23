@@ -70,7 +70,7 @@ public class JobManager
         switch (job.Operation)
         {
             case Job.OperationEnum.Encode:
-                return $" \"{job.FilePath}\" \"{job.TargetFilePath}\"";
+                return $"-q {job.Config.Quality} -e {job.Config.Effort} \"{job.FilePath}\" \"{job.TargetFilePath}\"";
             case Job.OperationEnum.Decode:
                 return $" \"{job.FilePath}\" \"{job.TargetFilePath}\"";
             default:
@@ -185,6 +185,7 @@ public class Job : ObservableObject
     public OperationEnum Operation => this.GetOperation(this.FileInfo);
 
     public string FormattedLength { get; init; }
+    public Config Config { get; init; }
     public string TargetFilePath { get; internal set; }
     public long TargetFileLength { get; internal set; }
 
@@ -196,7 +197,7 @@ public class Job : ObservableObject
 
     public string ProcessOutput { get; set; }
 
-    public static Job Create(string filepath)
+    public static Job Create(string filepath, Config config)
     {
         var fi = new FileInfo(filepath);
         return new Job
@@ -205,7 +206,8 @@ public class Job : ObservableObject
             FileName = fi.Name,
             Length = fi.Length,
             FileInfo = fi,
-            FormattedLength = GetFormattedLength(fi.Length)
+            FormattedLength = GetFormattedLength(fi.Length),
+            Config = config
         };
     }
 
@@ -239,6 +241,36 @@ public class Job : ObservableObject
 
     public static Job GetDesignDate(JobStateEnum state)
     {
+        if (state is JobStateEnum.Pending )
+        {
+            return new Job
+            {
+                FileName = "pic1.png",
+                FilePath = "C:\\Users\\User\\Pictures\\pic1.png",
+                TargetFilePath = "C:\\Users\\User\\Pictures\\pic1.png.avif",
+                State = state,
+                FormattedLength = "131 KB",
+                Config = null
+            };
+        }
+
+        if (state is JobStateEnum.Working)
+        {
+            return new Job
+            {
+                FileName = "pic1.png",
+                FilePath = "C:\\Users\\User\\Pictures\\pic1.png",
+                TargetFilePath = "C:\\Users\\User\\Pictures\\pic1.png.avif",
+                State = state,
+                FormattedLength = "131 KB",
+                Config = new Config
+                {
+                    Quality = 90,
+                    Effort = 6,
+                }
+            };
+        }
+
         return new Job
         {
             FileName = "pic1.png",
@@ -246,7 +278,12 @@ public class Job : ObservableObject
             TargetFilePath = "C:\\Users\\User\\Pictures\\pic1.png.avif",
             State = state,
             FormattedLength = "132 KB",
-            TargetFileFormattedLength = "80 KB"
+            TargetFileFormattedLength = "80 KB",
+            Config = new Config
+            {
+                Quality = 90,
+                Effort = 6,
+            }
         };
     }
 }

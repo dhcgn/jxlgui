@@ -30,7 +30,7 @@ internal class MainViewModel : ObservableRecipient
             if (!this.CanEncode)
                 return;
 
-            var job = Job.Create(m.Value);
+            var job = Job.Create(m.Value, Config.Load());
             jm.Add(job);
             this.Jobs.Add(job);
         });
