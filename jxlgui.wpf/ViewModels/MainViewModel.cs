@@ -17,8 +17,8 @@ namespace jxlgui.wpf.ViewModels;
 internal class MainViewModel : ObservableRecipient
 {
     private bool canEncode;
-    private string jxlDecVersion = "UNDEF";
-    private string jxlEncVersion = "UNDEF";
+
+
 
     public MainViewModel()
     {
@@ -56,16 +56,32 @@ internal class MainViewModel : ObservableRecipient
 
     public ObservableCollection<Job> Jobs { get; } = new();
 
+    private string jxlEncVersion = "UNDEF";
     public string JxlEncVersion
     {
         get => this.jxlEncVersion;
         set => this.SetProperty(ref this.jxlEncVersion, value);
     }
 
+    private string jxlEncCommit = "0000000";
+    public string JxlEncCommit
+    {
+        get => this.jxlEncCommit;
+        set => this.SetProperty(ref this.jxlEncCommit, value);
+    }
+
+    private string jxlDecVersion = "UNDEF";
     public string JxlDecVersion
     {
         get => this.jxlDecVersion;
         set => this.SetProperty(ref this.jxlDecVersion, value);
+    }
+
+    private string jxlDecCommit = "0000000";
+    public string JxlDecCommit
+    {
+        get => this.jxlDecCommit;
+        set => this.SetProperty(ref this.jxlDecCommit, value);
     }
 
     public RelayCommand ShowSettingsCommand { get; set; }
@@ -100,21 +116,24 @@ internal class MainViewModel : ObservableRecipient
 
     private async Task OnLoadCommandHandlingAsync()
     {
-        void SetVersion(Action<string> Set, ExternalJxlResourceHandler.JxlFileResult jxlFileResult)
+        void SetVersionCommit(Action<string> SetVersion, Action<string> SetCommit, ExternalJxlResourceHandler.JxlFileResult jxlFileResult)
         {
             if (jxlFileResult.Result == ExternalJxlResourceHandler.JxlFileResultEnum.FileNotFound)
             {
-                Set("FILE NOT FOUND");
+                SetVersion("FILE NOT FOUND");
+                SetCommit("");
                 this.CanEncode = false;
             }
             else if (jxlFileResult.Result == ExternalJxlResourceHandler.JxlFileResultEnum.VersionNotReadable)
             {
-                Set("ERROR");
+                SetVersion("ERROR");
+                SetCommit("");
                 this.CanEncode = false;
             }
             else if (jxlFileResult.Result == ExternalJxlResourceHandler.JxlFileResultEnum.OK)
             {
-                Set(jxlFileResult.Version);
+                SetVersion(jxlFileResult.Version);
+                SetCommit(jxlFileResult.Commit);
                 this.CanEncode = true;
             }
         }
@@ -123,8 +142,8 @@ internal class MainViewModel : ObservableRecipient
 
         await Task.Factory.StartNew(() =>
         {
-            SetVersion(s => this.JxlEncVersion = s, ExternalJxlResourceHandler.GetEncoderInformation());
-            SetVersion(s => this.JxlDecVersion = s, ExternalJxlResourceHandler.GetDecoderInformation());
+            SetVersionCommit(v => this.JxlEncVersion = v,c => this.JxlEncCommit = c,  ExternalJxlResourceHandler.GetEncoderInformation());
+            SetVersionCommit(v => this.JxlDecVersion = v,c => this.JxlDecCommit = c, ExternalJxlResourceHandler.GetDecoderInformation());
         });
     }
 }
