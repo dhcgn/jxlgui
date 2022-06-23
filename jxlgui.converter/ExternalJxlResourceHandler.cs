@@ -32,7 +32,7 @@ public class ExternalJxlResourceHandler
                 Result = JxlFileResultEnum.FileNotFound
             };
 
-        var version = GetExecutableVersion(path);
+        (string version, string commit) = GetExecutableVersion(path);
 
         if (version == null)
             return new JxlFileResult
@@ -43,12 +43,13 @@ public class ExternalJxlResourceHandler
         return new JxlFileResult
         {
             Result = JxlFileResultEnum.OK,
-            Version = version
+            Version = version,
+            Commit = commit
         };
     }
 
 
-    private static string GetExecutableVersion(string path)
+    private static (string version, string commit) GetExecutableVersion(string path)
     {
         var proc = new Process
         {
@@ -66,12 +67,20 @@ public class ExternalJxlResourceHandler
         var line = "";
         while (!proc.StandardOutput.EndOfStream) line += proc.StandardOutput.ReadLine();
 
-        return ParseVersion(line);
+        return (ParseVersion(line), ParseCommit(line));
     }
 
     private static string ParseVersion(string input)
     {
         var r = Regex.Match(input, @"v(\d{1,}.\d{1,}.\d{1,})");
+        if (r.Groups.Count != 2) return null;
+
+        return r.Groups[1].Value;
+    }
+
+    private static string ParseCommit(string input)
+    {
+        var r = Regex.Match(input, @"([a-f0-9]{6,})");
         if (r.Groups.Count != 2) return null;
 
         return r.Groups[1].Value;
@@ -101,5 +110,6 @@ public class ExternalJxlResourceHandler
     {
         public JxlFileResultEnum Result { get; init; }
         public string Version { get; init; }
+        public string Commit { get; init; }
     }
 }
