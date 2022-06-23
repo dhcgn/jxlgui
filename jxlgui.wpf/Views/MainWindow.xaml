@@ -108,16 +108,24 @@
                 <TextBlock Text="JXL ENC" Background="{StaticResource FooterBackground}"
                            Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
                 <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
-                    <TextBlock Text="{Binding JxlEncVersion}" VerticalAlignment="Center" Padding="5,0"
-                               Foreground="{StaticResource FooterText}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding JxlEncVersion}" VerticalAlignment="Center" Padding="5,0"
+                                   Foreground="{StaticResource FooterText}" />
+                        <TextBlock Text="{Binding JxlEncCommit}" VerticalAlignment="Center" Padding="5,0"
+                                   Foreground="{StaticResource FooterText}" />
+                    </StackPanel>
                 </Border>
                 <Border Width="5" />
 
                 <TextBlock Text="JXL DEC" Background="{StaticResource FooterBackground}"
                            Foreground="{StaticResource FooterHeaderText}" FontWeight="Bold" Padding="5" />
                 <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
-                    <TextBlock Text="{Binding JxlDecVersion}" VerticalAlignment="Center" Padding="5,0"
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding JxlDecVersion}" VerticalAlignment="Center" Padding="5,0"
                                Foreground="{StaticResource FooterText}" />
+                        <TextBlock Text="{Binding JxlDecCommit}" VerticalAlignment="Center" Padding="5,0"
+                                   Foreground="{StaticResource FooterText}" />
+                    </StackPanel>
                 </Border>
                 <Border Width="5" />
                 <Button Content="Config" Padding="10,0" Command="{Binding ShowSettingsCommand}" />
