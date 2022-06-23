@@ -114,7 +114,7 @@
                                Foreground="{StaticResource FooterText}" />
                 </Border>
                 <Border Width="5" />
-
+                <Button Content="Config" Padding="10,0" Command="{Binding ShowSettingsCommand}" />
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5">
