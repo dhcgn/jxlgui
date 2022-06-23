@@ -37,6 +37,7 @@ internal class MainViewModel : ObservableRecipient
 
         this.ShowSettingsCommand =
             new RelayCommand(() => this.Messenger.Send(new WindowMessage(WindowEnum.SettingsWindows)));
+        this.OpenHelpCommand = new RelayCommand(() => OpenUrl(@"https://github.com/dhcgn/jxlgui/wiki"));
 
         this.Configs = new List<string> { "built in" };
         this.SelectedConfig = this.Configs.First();
@@ -85,6 +86,7 @@ internal class MainViewModel : ObservableRecipient
     }
 
     public RelayCommand ShowSettingsCommand { get; set; }
+    public RelayCommand OpenHelpCommand { get; set; }
     public List<string> Configs { get; }
     public string SelectedConfig { get; set; }
     public IAsyncRelayCommand OnLoadCommand { get; }

@@ -352,3 +352,5 @@ MigrationBackup/
 jxlgui.buildinfo/assets/commitid
 jxlgui.buildinfo/assets/date
 jxlgui.buildinfo/assets/version
+hooks/
+lfs/
