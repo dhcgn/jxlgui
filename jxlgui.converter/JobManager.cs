@@ -158,6 +158,7 @@ public class Job : ObservableObject
     private JobStateEnum state;
     private string targetFileFormattedLength;
 
+
     public string FilePath { get; init; }
     public string FileName { get; init; }
     public long Length { get; init; }
@@ -182,10 +183,17 @@ public class Job : ObservableObject
 
     public FileInfo FileInfo { get; init; }
 
-    public OperationEnum Operation => this.GetOperation(this.FileInfo);
+    public OperationEnum Operation => GetOperation(this.FileInfo);
 
     public string FormattedLength { get; init; }
-    public Config Config { get; init; }
+
+    private Config? config;
+    public Config? Config
+    {
+        get => config;
+        set => base.SetProperty(ref config, value);
+    }
+
     public string TargetFilePath { get; internal set; }
     public long TargetFileLength { get; internal set; }
 
@@ -200,15 +208,17 @@ public class Job : ObservableObject
     public static Job Create(string filepath, Config config)
     {
         var fi = new FileInfo(filepath);
-        return new Job
+        var job = new Job
         {
             FilePath = fi.FullName,
             FileName = fi.Name,
             Length = fi.Length,
             FileInfo = fi,
             FormattedLength = GetFormattedLength(fi.Length),
-            Config = config
+            Config = GetOperation(fi) == OperationEnum.Encode ? config : null,
         };
+
+        return job;
     }
 
     private static string GetFormattedLength(double len)
@@ -227,7 +237,7 @@ public class Job : ObservableObject
         return result;
     }
 
-    private OperationEnum GetOperation(FileInfo fileInfo)
+    private static OperationEnum GetOperation(FileInfo fileInfo)
     {
         if (fileInfo == null)
             return OperationEnum.Undef;
@@ -241,7 +251,7 @@ public class Job : ObservableObject
 
     public static Job GetDesignDate(JobStateEnum state)
     {
-        if (state is JobStateEnum.Pending )
+        if (state is JobStateEnum.Pending)
         {
             return new Job
             {
