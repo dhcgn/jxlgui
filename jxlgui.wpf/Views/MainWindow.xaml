@@ -51,7 +51,7 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock IsHitTestVisible="False"
                            TextAlignment="Center"
-                           Text="Drop PNG, APNG, GIF, JPEG, PPM, PFM, or PGX file here" />
+                           Text="Drop PNG, APNG, GIF, JPEG, PPM, PFM, PGX or JXL file here" />
             </StackPanel>
         </Border>
 
