@@ -4,13 +4,21 @@ Windows Desktop App to convert images to JPEG XL files, the successor of JPEG.
 
 The input can be PNG, APNG, GIF, JPEG, PPM, PFM, or PGX, a JPEG XL (JXL) file will be converted to PNG with ICC, JPG, or PPM/PFM.
 
+![dotnet_l4dZJ8cOw1](https://user-images.githubusercontent.com/6566207/175294356-6f7792e1-f69f-41a3-a7de-c7ffc75b614e.png)
+
 https://user-images.githubusercontent.com/6566207/152654674-f232b6b7-c2d1-4f4e-a78d-1cbfe3bb6020.mp4
 
 ## Why JPEG XL (jxl)?
 
+https://jpegxl.info/
+
 ## Why convert JPG to JXL?
 
+Lossless JPEG transcoding: about 20% smaller
+
 ## Why JPEG XL and not AVIF?
+
+https://cloudinary.com/blog/how_jpeg_xl_compares_to_other_image_codecs
 
 ## This app includes libjxl
 
