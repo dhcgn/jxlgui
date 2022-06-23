@@ -58,7 +58,7 @@
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Jobs}" Margin="20,0,20,20">
             <ItemsControl.Template>
                 <ControlTemplate>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ItemsPresenter />
                     </ScrollViewer>
                 </ControlTemplate>
@@ -84,10 +84,11 @@
                                            Visibility="{Binding TargetFileFormattedLength, Converter={StaticResource VisibilityStringAnyConverter}}" />
                                 <TextBlock Text="{Binding TargetFileFormattedLength}" FontSize="8" />
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Visibility="{Binding Config, Converter={StaticResource VisibilityNullConverter}}">
-                                <TextBlock  FontSize="8" Text="{Binding Config.Quality, StringFormat=Quality: {0}}" />
+                            <StackPanel Orientation="Horizontal"
+                                        Visibility="{Binding Config, Converter={StaticResource VisibilityNullConverter}}">
+                                <TextBlock FontSize="8" Text="{Binding Config.Quality, StringFormat=Quality: {0}}" />
                                 <Border Width="5"></Border>
-                                <TextBlock  FontSize="8" Text="{Binding Config.Effort, StringFormat=Effort: {0}}" />
+                                <TextBlock FontSize="8" Text="{Binding Config.Effort, StringFormat=Effort: {0}}" />
                             </StackPanel>
                             <TextBlock Text="{Binding State}" FontStyle="Italic" FontSize="8" TextAlignment="Center" />
                         </StackPanel>
@@ -129,7 +130,7 @@
                 <Border BorderBrush="{StaticResource FooterBackground}" BorderThickness="2">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding JxlDecVersion}" VerticalAlignment="Center" Padding="5,0"
-                               Foreground="{StaticResource FooterText}" />
+                                   Foreground="{StaticResource FooterText}" />
                         <TextBlock Text="{Binding JxlDecCommit}" VerticalAlignment="Center" Padding="5,0"
                                    Foreground="{StaticResource FooterText}" />
                     </StackPanel>

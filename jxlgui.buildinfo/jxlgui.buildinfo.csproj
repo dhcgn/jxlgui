@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="assets\commitid" />
-    <None Remove="assets\date" />
-    <None Remove="assets\version" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Remove="assets\commitid"/>
+        <None Remove="assets\date"/>
+        <None Remove="assets\version"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="assets\commitid" />
-    <EmbeddedResource Include="assets\date" />
-    <EmbeddedResource Include="assets\version" />
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="assets\commitid"/>
+        <EmbeddedResource Include="assets\date"/>
+        <EmbeddedResource Include="assets\version"/>
+    </ItemGroup>
 
 </Project>

@@ -188,6 +188,7 @@ public class Job : ObservableObject
     public string FormattedLength { get; init; }
 
     private Config? config;
+
     public Config? Config
     {
         get => config;
@@ -203,7 +204,7 @@ public class Job : ObservableObject
         internal set => this.SetProperty(ref this.targetFileFormattedLength, value);
     }
 
-    public string ProcessOutput { get; set; }
+    public string ProcessOutput { get; set; } = "Waiting for process output";
 
     public static Job Create(string filepath, Config config)
     {

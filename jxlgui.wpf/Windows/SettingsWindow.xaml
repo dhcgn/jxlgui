@@ -23,7 +23,8 @@
         </Grid.RowDefinitions>
 
         <TextBox Padding="5" FontFamily="Consolas" FontSize="12" AcceptsReturn="True" AcceptsTab="True"
-                 ScrollViewer.VerticalScrollBarVisibility="Visible" Text="{Binding Config, UpdateSourceTrigger=PropertyChanged}" />
+                 ScrollViewer.VerticalScrollBarVisibility="Visible"
+                 Text="{Binding Config, UpdateSourceTrigger=PropertyChanged}" />
         <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
             <TextBlock Padding="10,0,0,0" Foreground="Red" FontWeight="Bold" Text="{Binding ConfigError}"></TextBlock>
         </StackPanel>

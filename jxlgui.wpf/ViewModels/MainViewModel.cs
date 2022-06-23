@@ -19,7 +19,6 @@ internal class MainViewModel : ObservableRecipient
     private bool canEncode;
 
 
-
     public MainViewModel()
     {
         this.OnLoadCommand = new AsyncRelayCommand(this.OnLoadCommandHandlingAsync);
@@ -63,6 +62,7 @@ internal class MainViewModel : ObservableRecipient
     public ObservableCollection<Job> Jobs { get; } = new();
 
     private string jxlEncVersion = "UNDEF";
+
     public string JxlEncVersion
     {
         get => this.jxlEncVersion;
@@ -70,6 +70,7 @@ internal class MainViewModel : ObservableRecipient
     }
 
     private string jxlEncCommit = "0000000";
+
     public string JxlEncCommit
     {
         get => this.jxlEncCommit;
@@ -77,6 +78,7 @@ internal class MainViewModel : ObservableRecipient
     }
 
     private string jxlDecVersion = "UNDEF";
+
     public string JxlDecVersion
     {
         get => this.jxlDecVersion;
@@ -84,6 +86,7 @@ internal class MainViewModel : ObservableRecipient
     }
 
     private string jxlDecCommit = "0000000";
+
     public string JxlDecCommit
     {
         get => this.jxlDecCommit;
@@ -123,7 +126,8 @@ internal class MainViewModel : ObservableRecipient
 
     private async Task OnLoadCommandHandlingAsync()
     {
-        void SetVersionCommit(Action<string> SetVersion, Action<string> SetCommit, ExternalJxlResourceHandler.JxlFileResult jxlFileResult)
+        void SetVersionCommit(Action<string> SetVersion, Action<string> SetCommit,
+            ExternalJxlResourceHandler.JxlFileResult jxlFileResult)
         {
             if (jxlFileResult.Result == ExternalJxlResourceHandler.JxlFileResultEnum.FileNotFound)
             {
@@ -149,8 +153,10 @@ internal class MainViewModel : ObservableRecipient
 
         await Task.Factory.StartNew(() =>
         {
-            SetVersionCommit(v => this.JxlEncVersion = v,c => this.JxlEncCommit = c,  ExternalJxlResourceHandler.GetEncoderInformation());
-            SetVersionCommit(v => this.JxlDecVersion = v,c => this.JxlDecCommit = c, ExternalJxlResourceHandler.GetDecoderInformation());
+            SetVersionCommit(v => this.JxlEncVersion = v, c => this.JxlEncCommit = c,
+                ExternalJxlResourceHandler.GetEncoderInformation());
+            SetVersionCommit(v => this.JxlDecVersion = v, c => this.JxlDecCommit = c,
+                ExternalJxlResourceHandler.GetDecoderInformation());
         });
     }
 }

@@ -1,5 +1,4 @@
-﻿
-using System.IO;
+﻿using System.IO;
 using System.Text.Json;
 using System.Windows;
 using jxlgui.converter;
@@ -14,8 +13,12 @@ public class SettingsViewModel : ObservableRecipient
 {
     public SettingsViewModel()
     {
-        this.SaveCommand = new RelayCommand(SaveCommandHandling, () => jxlgui.converter.Config.IsJsonValid(this.Config));
-        this.CancelCommand = new RelayCommand(() => {this.Messenger.Send(new WindowMessage(WindowEnum.SettingsWindowsClose));});
+        this.SaveCommand =
+            new RelayCommand(SaveCommandHandling, () => jxlgui.converter.Config.IsJsonValid(this.Config));
+        this.CancelCommand = new RelayCommand(() =>
+        {
+            this.Messenger.Send(new WindowMessage(WindowEnum.SettingsWindowsClose));
+        });
 
         var c = jxlgui.converter.Config.LoadOrCreateNew();
         this.Config = c.ToJson();
@@ -49,7 +52,7 @@ public class SettingsViewModel : ObservableRecipient
     public RelayCommand CancelCommand { get; set; }
 
     private string config;
-   
+
 
     public string Config
     {
@@ -62,10 +65,10 @@ public class SettingsViewModel : ObservableRecipient
     }
 
     private string? configError;
-    public string? ConfigError 
+
+    public string? ConfigError
     {
         get { return configError; }
         set { base.SetProperty(ref this.configError, value); }
     }
-
 }

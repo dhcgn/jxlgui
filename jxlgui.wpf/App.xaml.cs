@@ -7,7 +7,6 @@ namespace jxlgui.wpf;
 
 public partial class App : Application
 {
-    
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
@@ -21,6 +20,7 @@ public partial class App : Application
                 w = new SettingsWindow();
                 w.ShowDialog();
             }
+
             if (m.Value == WindowEnum.SettingsWindowsClose)
             {
                 w?.Close();

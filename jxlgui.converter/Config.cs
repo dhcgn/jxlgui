@@ -12,6 +12,7 @@ public class Config
     // Encoder effort setting. Range: 1 .. 9.
     // Default: 7. Higher number is more effort (slower)    
     public int Effort { get; set; }
+
     public static Config CreateEmpty()
     {
         return new Config
@@ -37,7 +38,6 @@ public class Config
         {
             var settings = JsonSerializer.Deserialize<jxlgui.converter.Config>(json);
             return settings != null;
-
         }
         catch (System.Exception)
         {
@@ -52,6 +52,7 @@ public class Config
         {
             return Load();
         }
+
         var config = CreateEmpty();
         Save(config);
         return config;
@@ -70,7 +71,6 @@ public class Config
         {
             var config = JsonSerializer.Deserialize<jxlgui.converter.Config>(json);
             return config;
-
         }
         catch (System.Exception)
         {
