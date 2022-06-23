@@ -86,7 +86,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal"
                                         Visibility="{Binding Config, Converter={StaticResource VisibilityNullConverter}}">
-                                <TextBlock FontSize="8" Text="{Binding Config.Quality, StringFormat=Quality: {0}}" />
+                                <TextBlock FontSize="8" Text="{Binding Config.Quality, StringFormat=Quality: {0:N3}}" />
                                 <Border Width="5"></Border>
                                 <TextBlock FontSize="8" Text="{Binding Config.Effort, StringFormat=Effort: {0}}" />
                             </StackPanel>

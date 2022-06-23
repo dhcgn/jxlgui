@@ -7,7 +7,7 @@ public class Config
     // Quality setting (is remapped to --distance). Range: -inf .. 100.
     // 100 = mathematically lossless. Default for already-lossy input (JPEG/GIF).
     // Positive quality values roughly match libjpeg quality.
-    public int Quality { get; set; }
+    public double Quality { get; set; }
 
     // Encoder effort setting. Range: 1 .. 9.
     // Default: 7. Higher number is more effort (slower)    
@@ -17,7 +17,7 @@ public class Config
     {
         return new Config
         {
-            Quality = 99,
+            Quality = 99.9,
             Effort = 7
         };
     }

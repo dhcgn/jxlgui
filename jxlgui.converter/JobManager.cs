@@ -70,7 +70,8 @@ public class JobManager
         switch (job.Operation)
         {
             case Job.OperationEnum.Encode:
-                return $"-q {job.Config.Quality} -e {job.Config.Effort} \"{job.FilePath}\" \"{job.TargetFilePath}\"";
+                var quality = job.Config.Quality.ToString("N3", System.Globalization.CultureInfo.InvariantCulture);
+                return $"-q {quality} -e {job.Config.Effort} \"{job.FilePath}\" \"{job.TargetFilePath}\"";
             case Job.OperationEnum.Decode:
                 return $" \"{job.FilePath}\" \"{job.TargetFilePath}\"";
             default:
