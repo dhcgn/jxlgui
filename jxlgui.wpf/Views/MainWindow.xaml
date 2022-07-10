@@ -86,9 +86,11 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal"
                                         Visibility="{Binding Config, Converter={StaticResource VisibilityNullConverter}}">
-                                <TextBlock FontSize="8" Text="{Binding Config.Quality, StringFormat=Quality: {0:N3}}" />
+                                <TextBlock FontSize="8" Text="{Binding Config.Quality, StringFormat=Quality: {0:N3}}" Visibility="{Binding Config.Quality, Converter={StaticResource VisibilityNullConverter}}" />
                                 <Border Width="5"></Border>
                                 <TextBlock FontSize="8" Text="{Binding Config.Effort, StringFormat=Effort: {0}}" />
+                                <Border Width="5"></Border>
+                                <TextBlock FontSize="8" Text="{Binding Config.Distance, StringFormat=Distance: {0:N3}}" Visibility="{Binding Config.Distance, Converter={StaticResource VisibilityNullConverter}}" />
                             </StackPanel>
                             <TextBlock Text="{Binding State}" FontStyle="Italic" FontSize="8" TextAlignment="Center" />
                         </StackPanel>
