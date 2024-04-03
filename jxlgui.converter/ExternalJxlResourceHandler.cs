@@ -32,7 +32,7 @@ public class ExternalJxlResourceHandler
                 Result = JxlFileResultEnum.FileNotFound
             };
 
-        (string version, string commit) = GetExecutableVersion(path);
+        (string? version, string? commit) = GetExecutableVersion(path);
 
         if (version == null)
             return new JxlFileResult
@@ -49,7 +49,7 @@ public class ExternalJxlResourceHandler
     }
 
 
-    private static (string version, string commit) GetExecutableVersion(string path)
+    private static (string? version, string? commit) GetExecutableVersion(string path)
     {
         var proc = new Process
         {
@@ -70,7 +70,7 @@ public class ExternalJxlResourceHandler
         return (ParseVersion(line), ParseCommit(line));
     }
 
-    private static string ParseVersion(string input)
+    private static string? ParseVersion(string input)
     {
         var r = Regex.Match(input, @"v(\d{1,}.\d{1,}.\d{1,})");
         if (r.Groups.Count != 2) return null;
@@ -78,7 +78,7 @@ public class ExternalJxlResourceHandler
         return r.Groups[1].Value;
     }
 
-    private static string ParseCommit(string input)
+    private static string? ParseCommit(string input)
     {
         var r = Regex.Match(input, @"([a-f0-9]{6,})");
         if (r.Groups.Count != 2) return null;
@@ -100,16 +100,17 @@ public class ExternalJxlResourceHandler
         var name = assembly.GetManifestResourceNames().First(n => n.EndsWith(resourceName));
 
         using var resource = assembly.GetManifestResourceStream(name);
-        using (var file = new FileStream(fileName, FileMode.Create, FileAccess.Write))
-        {
-            resource.CopyTo(file);
-        }
+        if (resource == null)
+            return;
+
+        using var file = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+        resource.CopyTo(file);
     }
 
     public class JxlFileResult
     {
         public JxlFileResultEnum Result { get; init; }
-        public string Version { get; init; }
-        public string Commit { get; init; }
+        public string? Version { get; init; }
+        public string? Commit { get; init; }
     }
 }

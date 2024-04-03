@@ -52,14 +52,25 @@ public class JobManager
 
     private static string GetArguments(Job job)
     {
-        var targetFilePath = "";
+        if (job == null)
+            throw new ArgumentNullException(nameof(job));
+
+        string? targetFilePath;
+        FileInfo fileInfo = new FileInfo(job.FilePath);
+        if (!fileInfo.Exists)
+            throw new FileNotFoundException(job.FilePath);
+
+        var directoryName = fileInfo.DirectoryName;
+        if (directoryName == null)
+            throw new Exception("Directory name is null");
+
         switch (job.Operation)
         {
             case Job.OperationEnum.Encode:
-                targetFilePath = $"{Path.Combine(new FileInfo(job.FilePath).DirectoryName, job.FileName)}.jxl";
+                targetFilePath = $"{Path.Combine(directoryName, job.FileName)}.jxl";
                 break;
             case Job.OperationEnum.Decode:
-                targetFilePath = $"{Path.Combine(new FileInfo(job.FilePath).DirectoryName, job.FileName)}.png";
+                targetFilePath = $"{Path.Combine(directoryName, job.FileName)}.png";
                 break;
             default:
                 throw new Exception($"{job.Operation} should be Encode or Decode");
@@ -70,6 +81,9 @@ public class JobManager
         switch (job.Operation)
         {
             case Job.OperationEnum.Encode:
+                if (job.Config == null)
+                    throw new ArgumentNullException(nameof(job.Config));
+
                 var args = $"-e {job.Config.Effort} ";
                 
                 if (job.Config.Quality.HasValue)
@@ -147,7 +161,7 @@ public class JobManager
     private class ExecuteImageOperationResult
     {
         public Job.JobStateEnum State { get; internal set; }
-        public string Output { get; set; }
+        public required string Output { get; set; }
     }
 }
 
@@ -172,11 +186,11 @@ public class Job : ObservableObject
     }
 
     private JobStateEnum state;
-    private string targetFileFormattedLength;
+    private string? targetFileFormattedLength;
 
 
-    public string FilePath { get; init; }
-    public string FileName { get; init; }
+    public required string FilePath { get; init; }
+    public required string FileName { get; init; }
     public long Length { get; init; }
 
     public JobStateEnum State
@@ -197,11 +211,11 @@ public class Job : ObservableObject
         }
     }
 
-    public FileInfo FileInfo { get; init; }
+    public required FileInfo FileInfo { get; init; }
 
     public OperationEnum Operation => GetOperation(this.FileInfo);
 
-    public string FormattedLength { get; init; }
+    public required string FormattedLength { get; init; }
 
     private Config? config;
 
@@ -211,10 +225,10 @@ public class Job : ObservableObject
         set => base.SetProperty(ref config, value);
     }
 
-    public string TargetFilePath { get; internal set; }
+    public string? TargetFilePath { get; internal set; }
     public long TargetFileLength { get; internal set; }
 
-    public string TargetFileFormattedLength
+    public string? TargetFileFormattedLength
     {
         get => this.targetFileFormattedLength;
         internal set => this.SetProperty(ref this.targetFileFormattedLength, value);
@@ -275,6 +289,7 @@ public class Job : ObservableObject
                 FileName = "pic1.png",
                 FilePath = "C:\\Users\\User\\Pictures\\pic1.png",
                 TargetFilePath = "C:\\Users\\User\\Pictures\\pic1.png.avif",
+                FileInfo = new FileInfo("C:\\Users\\User\\Pictures\\pic1.png"),
                 State = state,
                 FormattedLength = "131 KB",
                 Config = null
@@ -288,6 +303,7 @@ public class Job : ObservableObject
                 FileName = "pic1.png",
                 FilePath = "C:\\Users\\User\\Pictures\\pic1.png",
                 TargetFilePath = "C:\\Users\\User\\Pictures\\pic1.png.avif",
+                FileInfo = new FileInfo("C:\\Users\\User\\Pictures\\pic1.png"),
                 State = state,
                 FormattedLength = "131 KB",
                 Config = new Config
@@ -303,6 +319,7 @@ public class Job : ObservableObject
             FileName = "pic1.png",
             FilePath = "C:\\Users\\User\\Pictures\\pic1.png",
             TargetFilePath = "C:\\Users\\User\\Pictures\\pic1.png.avif",
+            FileInfo = new FileInfo("C:\\Users\\User\\Pictures\\pic1.png"),
             State = state,
             FormattedLength = "132 KB",
             TargetFileFormattedLength = "80 KB",

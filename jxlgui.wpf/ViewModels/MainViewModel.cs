@@ -69,25 +69,25 @@ internal class MainViewModel : ObservableRecipient
         set => this.SetProperty(ref this.jxlEncVersion, value);
     }
 
-    private string jxlEncCommit = "0000000";
+    private string? jxlEncCommit = "0000000";
 
-    public string JxlEncCommit
+    public string? JxlEncCommit
     {
         get => this.jxlEncCommit;
         set => this.SetProperty(ref this.jxlEncCommit, value);
     }
 
-    private string jxlDecVersion = "UNDEF";
+    private string? jxlDecVersion = "UNDEF";
 
-    public string JxlDecVersion
+    public string? JxlDecVersion
     {
         get => this.jxlDecVersion;
         set => this.SetProperty(ref this.jxlDecVersion, value);
     }
 
-    private string jxlDecCommit = "0000000";
+    private string? jxlDecCommit = "0000000";
 
-    public string JxlDecCommit
+    public string? JxlDecCommit
     {
         get => this.jxlDecCommit;
         set => this.SetProperty(ref this.jxlDecCommit, value);
@@ -126,7 +126,7 @@ internal class MainViewModel : ObservableRecipient
 
     private async Task OnLoadCommandHandlingAsync()
     {
-        void SetVersionCommit(Action<string> SetVersion, Action<string> SetCommit,
+        void SetVersionCommit(Action<string?> SetVersion, Action<string?> SetCommit,
             ExternalJxlResourceHandler.JxlFileResult jxlFileResult)
         {
             if (jxlFileResult.Result == ExternalJxlResourceHandler.JxlFileResultEnum.FileNotFound)
