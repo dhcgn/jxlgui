@@ -3,9 +3,9 @@ using System.Text.Json;
 using System.Windows;
 using jxlgui.converter;
 using jxlgui.wpf.Messenger;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace jxlgui.wpf.ViewModels;
 

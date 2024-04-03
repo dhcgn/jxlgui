@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <PackageIcon>Icon.png</PackageIcon>
@@ -11,17 +11,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="Assets\Icon.ico"/>
+        <Content Include="Assets\Icon.ico" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2"/>
-        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39"/>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\jxlgui.buildinfo\jxlgui.buildinfo.csproj"/>
-        <ProjectReference Include="..\jxlgui.converter\jxlgui.converter.csproj"/>
+        <ProjectReference Include="..\jxlgui.buildinfo\jxlgui.buildinfo.csproj" />
+        <ProjectReference Include="..\jxlgui.converter\jxlgui.converter.csproj" />
     </ItemGroup>
 
     <ItemGroup>

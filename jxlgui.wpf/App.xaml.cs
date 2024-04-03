@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using jxlgui.wpf.Messenger;
 using jxlgui.wpf.Windows;
-using Microsoft.Toolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace jxlgui.wpf;
 

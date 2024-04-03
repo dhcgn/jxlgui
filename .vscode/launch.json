@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/jxlgui.wpf/bin/Debug/net6.0-windows/jxlgui.wpf.dll",
+            "program": "${workspaceFolder}/jxlgui.wpf/bin/Debug/net8.0-windows/jxlgui.wpf.dll",
             "args": [],
             "cwd": "${workspaceFolder}/jxlgui.wpf",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
