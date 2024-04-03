@@ -93,11 +93,11 @@ internal class MainViewModel : ObservableRecipient
         set => this.SetProperty(ref this.jxlDecCommit, value);
     }
 
-    public RelayCommand ShowSettingsCommand { get; set; }
-    public RelayCommand OpenHelpCommand { get; set; }
+    public required RelayCommand ShowSettingsCommand { get; set; }
+    public required RelayCommand OpenHelpCommand { get; set; }
     public List<string> Configs { get; }
     public string SelectedConfig { get; set; }
-    public IAsyncRelayCommand OnLoadCommand { get; }
+    public required IAsyncRelayCommand OnLoadCommand { get; set;}
 
     public bool CanEncode
     {
@@ -153,9 +153,9 @@ internal class MainViewModel : ObservableRecipient
 
         await Task.Factory.StartNew(() =>
         {
-            SetVersionCommit(v => this.JxlEncVersion = v, c => this.JxlEncCommit = c,
+            SetVersionCommit(v => this.JxlEncVersion = v ?? String.Empty, c => this.JxlEncCommit = c ?? String.Empty,
                 ExternalJxlResourceHandler.GetEncoderInformation());
-            SetVersionCommit(v => this.JxlDecVersion = v, c => this.JxlDecCommit = c,
+            SetVersionCommit(v => this.JxlDecVersion = v ?? String.Empty, c => this.JxlDecCommit = c ?? String.Empty,
                 ExternalJxlResourceHandler.GetDecoderInformation());
         });
     }

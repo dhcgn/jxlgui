@@ -62,9 +62,9 @@ public class SettingsViewModel : ObservableRecipient
         this.Config = c.ToJson();
     }
 
-    public RelayCommand OnLoadCommand { get; set; }
-    public RelayCommand SaveCommand { get; set; }
-    public RelayCommand CancelCommand { get; set; }
+    public required RelayCommand OnLoadCommand { get; set; }
+    public required RelayCommand SaveCommand { get; set; }
+    public required RelayCommand CancelCommand { get; set; }
 
     private string? config;
 
