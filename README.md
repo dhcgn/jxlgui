@@ -37,7 +37,7 @@ If you encounter any issues or have questions, please use the GitHub Issues sect
 
 ## Acknowledgments
 
-A big thank you to the developers and contributors of the JPEG XL file format. Your work inspires and enables projects like ours.
+A big thank you to the developers and contributors of the JPEG XL file format. Your work inspires and enables projects like this.
 
 ## License
 
