@@ -60,7 +60,8 @@ public class Config
     {
         if (File.Exists(Constants.ConfigPath))
         {
-            return Load();
+            var c = Load();
+            return c ?? CreateEmpty();
         }
 
         var config = CreateEmpty();

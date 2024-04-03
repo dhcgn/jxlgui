@@ -14,7 +14,12 @@ public class SettingsViewModel : ObservableRecipient
     public SettingsViewModel()
     {
         this.SaveCommand =
-            new RelayCommand(SaveCommandHandling, () => jxlgui.converter.Config.IsJsonValid(this.Config));
+            new RelayCommand(SaveCommandHandling, () =>
+            {
+                if (this.Config == null)
+                    return false;
+                return jxlgui.converter.Config.IsJsonValid(this.Config);
+            });
         this.CancelCommand = new RelayCommand(() =>
         {
             this.Messenger.Send(new WindowMessage(WindowEnum.SettingsWindowsClose));
@@ -36,6 +41,12 @@ public class SettingsViewModel : ObservableRecipient
 
     private void SaveCommandHandling()
     {
+        if (this.Config == null)
+        {
+            System.Windows.MessageBox.Show("Config is null");
+            return;
+        }
+
         if (!jxlgui.converter.Config.IsJsonValid(this.Config))
         {
             System.Windows.MessageBox.Show("Config is not valid");
@@ -44,22 +55,29 @@ public class SettingsViewModel : ObservableRecipient
 
         File.WriteAllText(Constants.ConfigPath, this.Config);
 
-        this.Config = jxlgui.converter.Config.Load()?.ToJson();
+        var c = jxlgui.converter.Config.Load();
+        if (c == null)
+            return;
+
+        this.Config = c.ToJson();
     }
 
-    public RelayCommand OnLoadCommand { get; set; }
-    public RelayCommand SaveCommand { get; set; }
-    public RelayCommand CancelCommand { get; set; }
+    public required RelayCommand OnLoadCommand { get; set; }
+    public required RelayCommand SaveCommand { get; set; }
+    public required RelayCommand CancelCommand { get; set; }
 
-    private string config;
+    private string? config;
 
-
-    public string Config
+    public string? Config
     {
         get { return config; }
         set
         {
             this.SetProperty(ref this.config, value);
+            if (this.Config == null){
+                ConfigError = "Config is null";
+                return;
+            }
             ConfigError = converter.Config.IsJsonValid(this.Config) ? null : "Json is not valid";
         }
     }

@@ -30,12 +30,14 @@ public class BuildInfos
         var name = assembly.GetManifestResourceNames().First(n => n.EndsWith(resourceName));
         using (var resource = assembly.GetManifestResourceStream(name))
         {
-            using (var reader = new StreamReader(resource))
-            {
-                var text = reader.ReadToEnd();
-                text = text.Trim();
-                return text;
-            }
+            if (resource == null)
+                return String.Empty;
+
+            using var reader = new StreamReader(resource);
+            var text = reader.ReadToEnd();
+            text = text.Trim();
+            return text;
         }
+
     }
 }
