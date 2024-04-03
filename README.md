@@ -1,55 +1,44 @@
 [![.NET](https://github.com/dhcgn/jxlgui/actions/workflows/dotnet.yml/badge.svg)](https://github.com/dhcgn/jxlgui/actions/workflows/dotnet.yml)
+
 # jxlgui
-Windows Desktop App to convert images to JPEG XL files, the successor of JPEG.
 
-The input can be PNG, APNG, GIF, JPEG, PPM, PFM, or PGX, a JPEG XL (JXL) file will be converted to PNG with ICC, JPG, or PPM/PFM.
+jxlgui is a Windows Desktop App designed to make the conversion of images to the JPEG XL format straightforward and accessible to everyone. With JPEG XL, you can enjoy modern image format benefits such as impressive performance and lossless compression. This tool stands out by offering a portable single executable file, making it easy to use without a complex installation process.
 
-![dotnet_l4dZJ8cOw1](https://user-images.githubusercontent.com/6566207/175294356-6f7792e1-f69f-41a3-a7de-c7ffc75b614e.png)
+## Motivation
 
-https://user-images.githubusercontent.com/6566207/152654674-f232b6b7-c2d1-4f4e-a78d-1cbfe3bb6020.mp4
+The motivation behind developing jxlgui was to increase the accessibility of the JPEG XL file format. We believe in the potential of JPEG XL to revolutionize image storage and transmission, and we want to contribute to its adoption by providing a user-friendly tool for image conversion.
 
-## Why JPEG XL (jxl)?
+## Key Features
 
-https://jpegxl.info/
+- **Portable**: jxlgui comes as a single executable file, requiring no installation.
+- **Batch Conversion**: Easily add multiple images to the app for batch conversion.
+- **Drag and Drop Interface**: Simply drag and drop your files into the app's drop area to start the conversion process.
+- **Supports Multiple Formats**: The input can be PNG, APNG, GIF, JPEG, PPM, PFM, or PGX, and a JPEG XL (JXL) file will be converted to PNG with ICC, JPG, or PPM/PFM.
 
-## Why convert JPG to JXL?
+## Installation
 
-Lossless JPEG transcoding: about 20% smaller
+No installation is required! Just copy the executable file to a convenient location on your computer and run it. jxlgui is built with .NET 8.0, so ensure your system meets the same requirements as .NET 8.0 for smooth operation.
 
-## Why JPEG XL and not AVIF?
+## Usage
 
-https://cloudinary.com/blog/how_jpeg_xl_compares_to_other_image_codecs
+Using jxlgui is as simple as dragging and dropping your image files into the app's drop area. For more detailed instructions and examples, please refer to the screenshots and video tutorials included in this README.
 
-## This app includes libjxl
+![Screenshot](https://github.com/dhcgn/jxlgui/assets/6566207/7e15bbb2-9f09-4bc5-9d08-d6c8878e10a5)
 
-See: https://github.com/libjxl/libjxl
+[Video Tutorial](https://user-images.githubusercontent.com/6566207/152654674-f232b6b7-c2d1-4f4e-a78d-1cbfe3bb6020.mp4)
 
-LICENSE: https://github.com/libjxl/libjxl/blob/main/LICENSE
+## Contributing
 
-Copyright (c) the JPEG XL Project Authors.
-All rights reserved.
+We welcome contributions! If you have ideas for improvements or want to contribute code, please feel free to add an issue or submit a pull request.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
+## Support
 
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
+If you encounter any issues or have questions, please use the GitHub Issues section of this repository. We are committed to providing support and addressing your concerns.
 
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
+## Acknowledgments
 
-3. Neither the name of the copyright holder nor the names of its
-   contributors may be used to endorse or promote products derived from
-   this software without specific prior written permission.
+A big thank you to the developers and contributors of the JPEG XL file format. Your work inspires and enables projects like ours.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+## License
+
+This app includes libjxl, which is licensed under the conditions listed [here](https://github.com/libjxl/libjxl/blob/main/LICENSE). For the license of jxlgui itself, please refer to the LICENSE file in this repository.
