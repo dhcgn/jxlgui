@@ -7,19 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="assets\cjxl.exe"/>
-        <None Remove="assets\djxl.exe"/>
-        <None Remove="assets\LICENSE"/>
+        <None Remove="assets\cjxl.exe" />
+        <None Remove="assets\djxl.exe" />
+        <None Remove="assets\LICENSE" />
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="assets\cjxl.exe"/>
-        <EmbeddedResource Include="assets\djxl.exe"/>
-        <EmbeddedResource Include="assets\LICENSE"/>
+        <EmbeddedResource Include="assets\cjxl.exe" />
+        <EmbeddedResource Include="assets\djxl.exe" />
+        <EmbeddedResource Include="assets\LICENSE" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2"/>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     </ItemGroup>
 
 </Project>
